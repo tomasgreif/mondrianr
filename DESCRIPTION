@@ -15,10 +15,8 @@ Depends:
 License: GPL-2
 LazyData: true
 Collate:
-    'olapr-package.r'
     'create_cube_content.r'
-    'create_cube_postgresql.r'
-    'create_cube_r.r'
     'standardize_name.r'
     'create_schema_postgresql.r'
     'create_schema_r.r'
+    'mondrianr-package.r'
