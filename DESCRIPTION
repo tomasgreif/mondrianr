@@ -1,0 +1,24 @@
+Package: mondrianr
+Title: Create Mondrian schema in R
+Description: Package mondrianr creates Mondrian schema from given dataset.
+    Currently supports
+    tables in PostgreSQL and data frames in R. R data frames are always
+    converted to SQLite database. For R data frames, time dimension is
+    generated automatically.
+Version: 0.1
+Author: Tomas Greif
+Maintainer: Tomas Greif <greif.tomas@gmail.com>
+Depends:
+    R (>= 3.0.2),
+    sqldf,
+    RSQLite
+License: GPL-2
+LazyData: true
+Collate:
+    'olapr-package.r'
+    'create_cube_content.r'
+    'create_cube_postgresql.r'
+    'create_cube_r.r'
+    'standardize_name.r'
+    'create_schema_postgresql.r'
+    'create_schema_r.r'
