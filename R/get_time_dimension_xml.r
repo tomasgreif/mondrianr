@@ -17,7 +17,7 @@ get_time_dimension_xml <- function(engine,time_table,final_design,con, debug=FAL
   table_name <- parse_table_name(engine, time_table)
 
   if(!is.na(table_name[1])) {
-    schema <- paste('schema="',table_name[1],'"')
+    schema <- paste0(' schema="',table_name[1],'"')
   } else {
     schema <- character(0)
   }
