@@ -55,7 +55,3 @@ class, type, dimension, aggregator
 default_mapping
 
 }
-
-#load_all()
-#get_default_mapping('R')
-#get_default_mapping('PostgreSQL')
