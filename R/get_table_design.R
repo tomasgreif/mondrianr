@@ -23,6 +23,9 @@
 get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {
   
   if(engine=='PostgreSQL') {
+    
+    table_name<-paste(parse_table_name(engine=engine,table=table),collapse='.')
+    
     options(sqldf.RPostgreSQL.user = con[1], 
             sqldf.RPostgreSQL.password = con[2],
             sqldf.RPostgreSQL.dbname = con[3],
@@ -37,7 +40,7 @@ get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {
                                  from 
                                   information_schema.columns 
                                  where 
-                                  table_schema || '.' || table_name = '",table,"'"),drv='PostgreSQL')  
+                                  table_schema || '.' || table_name = '",table_name,"'"),drv='PostgreSQL')  
   }
   
   if(engine=='R') {
