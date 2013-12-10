@@ -31,7 +31,7 @@ get_generic_dimension_xml <- function(engine, final_design, table, primary_key, 
   dimension <- dimension[dimension$class != 'date', ]
   
   if(!is.na(table_name[1])) {
-    schema <- paste('schema="',table_name[1],'"')
+    schema <- paste0(' schema="',table_name[1],'"')
   } else {
     schema <- character(0)
   }
