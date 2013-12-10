@@ -15,8 +15,20 @@ Depends:
 License: GPL-2
 LazyData: true
 Collate:
-    'create_cube_content.r'
     'standardize_name.r'
-    'create_schema_postgresql.r'
-    'create_schema_r.r'
     'mondrianr-package.r'
+    'create_schema.r'
+    'get_data_source_definition.r'
+    'get_default_design.r'
+    'get_default_mapping.r'
+    'get_final_design.r'
+    'get_footer.r'
+    'get_generic_dimension_xml.r'
+    'get_header.r'
+    'get_measure.r'
+    'get_measure_xml.r'
+    'get_table_design.R'
+    'get_time_dimension_xml.r'
+    'parse_table_name.r'
+    'prepare_infrastructure.r'
+    'big_portfolio.r'

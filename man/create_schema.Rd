@@ -1,73 +1,56 @@
 \name{create_schema}
 \alias{create_schema}
-\title{Create OLAP Schema}
+\title{Create Mondrian schema}
 \usage{
-  create_schema(engine, table_design, primary_key,
-    numeric_aggregators = NA, date_aggregators = NA, table,
-    schema, time_table, time_schema, dimension_data_types,
-    numeric_data_types)
-
-  create_schema(engine, table_design, primary_key,
-    numeric_aggregators = NA, date_aggregators = NA, table,
-    schema, time_table, time_schema, dimension_data_types,
-    numeric_data_types)
+  create_schema(engine, table, primary_key, con,
+    dimension = NA, aggregator = NA, schema_dest = NA,
+    data_source_dest = NA, time_table = NA, debug = FALSE)
 }
 \arguments{
-  \item{engine}{Name of database engine. Currently
-  supports: \code{R, PostgreSQL}}
+  \item{engine}{Data engine. Valid options are: \code{R},
+  \code{PostgreSQL}. If \code{PostgreSQL} is used then
+  \code{con} is required. Required.}
 
-  \item{table_design}{Data frame with column names and data
-  types. Passed from other functions}
+  \item{table}{Table for which schema should be created. In
+  Mondrian terminology, this is fact table}
 
-  \item{primary_key}{Passed from other functions}
+  \item{primary_key}{Primary key of \code{table}. Has to be
+  unique. Required}
 
-  \item{numeric_aggregators}{Passed from other functions}
+  \item{con}{Connection to PostgreSQL database. Character
+  vector of exactly five (5) elements: user, password,
+  database, host, port. Required for PostgreSQL}
 
-  \item{date_aggregators}{Passed from other functions}
+  \item{dimension}{Rule to modify inclusion/exclusion of
+  columns in \code{table} as dimenions. Has to be defined
+  as valid SQL \code{CASE} statement. Optional}
 
-  \item{table}{Passed from other functions}
+  \item{aggregator}{Rule to modify inclusion/exclusion of
+  aggregators for columns in \code{table}. Has to be
+  defined as valid SQL \code{CASE} statement and always
+  return string with exactly six (6) digits. See
+  \code{\link{get_default_mapping}} to understand in what
+  are aggregators defined. Optional}
 
-  \item{schema}{Passed from other functions}
+  \item{schema_dest}{Path to file where Mondrian schema
+  will be stored. Has to include file name.}
 
-  \item{time_table}{Passed from other functions}
+  \item{data_source_dest}{Path to file where data source
+  definition for Saiku will be stored. Has to include file
+  name. Optional}
 
-  \item{time_schema}{Passed from other functions}
+  \item{time_table}{Name of table with time dimension. If
+  PostgreSQL than this should be name of existing table
+  with columns \code{time_date, year_number,
+  quarter_number, month_number}. If R than any name can be
+  used as time dimension is created dynamically. Required.}
 
-  \item{dimension_data_types}{Passed from other functions}
-
-  \item{numeric_data_types}{Passed from other functions}
-
-  \item{engine}{Name of database engine. Currently
-  supports: \code{R, PostgreSQL}}
-
-  \item{table_design}{Data frame with column names and data
-  types. Passed from other functions}
-
-  \item{primary_key}{Passed from other functions}
-
-  \item{numeric_aggregators}{Passed from other functions}
-
-  \item{date_aggregators}{Passed from other functions}
-
-  \item{table}{Passed from other functions}
-
-  \item{schema}{Passed from other functions}
-
-  \item{time_table}{Passed from other functions}
-
-  \item{time_schema}{Passed from other functions}
-
-  \item{dimension_data_types}{Passed from other functions}
-
-  \item{numeric_data_types}{Passed from other functions}
+  \item{debug}{Print additional information useful for
+  debugging.}
 }
 \description{
-  Create cube content is internal function of \code{olapr}
-  package. Based on inputs, it will create correct cube for
-  chosen database engine.
-
-  Create cube content is internal function of \code{olapr}
-  package. Based on inputs, it will create correct cube for
-  chosen database engine.
+  This function returns XML definition of Mondrian schema.
+  Optionally returns file with data source definition for
+  Saiku.
 }
 
