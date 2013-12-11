@@ -14,6 +14,8 @@
 #' @export 
 get_data_source_definition <- function(engine,table,schema_dest,con, debug=FALSE) {
   
+  if(debug) cat('Starting creation of data source definition file. \n')    
+  
   if(engine=='PostgreSQL') {
     data_source_definition <- paste0(
       'type=OLAP
@@ -36,7 +38,7 @@ get_data_source_definition <- function(engine,table,schema_dest,con, debug=FALSE
 ')
   }
   
-  if(debug) cat('Data source definition created. \n')  
+  if(debug) cat('   Data source definition created. \n')  
   
     data_source_definition
 }

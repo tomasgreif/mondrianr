@@ -20,7 +20,8 @@
 #' @param time_table Name of table with time dimension. If PostgreSQL than this should be name of existing table
 #' with columns \code{time_date, year_number, quarter_number, month_number}. If R than any name can be used as
 #' time dimension is created dynamically. Optional. If not used than date columns will be treated as generic
-#' dimension.
+#' dimension. (ToDo: Currently, if you do not use any name for R engine, you will get integers instead of dates
+#'in Saiku, because RSQLite stores dates as integers. To be fixed in future version.)
 #' @param debug Print additional information useful for debugging.
 #' @export 
 #' 
@@ -34,7 +35,7 @@ create_schema <- function(engine, table, primary_key, con, dimension=NA, aggrega
   final_design    <- get_final_design(engine=engine,default_design=default_design,dimension=dimension,aggregator=aggregator, debug=debug)
 
   # Generate generic dimensions  
-  dimension_xml <- get_generic_dimension_xml(engine=engine, final_design=final_design, table=table, primary_key=primary_key, debug=debug)
+  dimension_xml <- get_generic_dimension_xml(engine=engine, final_design=final_design, table=table, time_table=time_table, primary_key=primary_key, debug=debug)
 
   # Generate time dimensions
   time_dimension_xml <- get_time_dimension_xml(engine=engine,time_table=time_table, final_design=final_design,con=con, debug=debug)
@@ -47,7 +48,6 @@ create_schema <- function(engine, table, primary_key, con, dimension=NA, aggrega
   # Finalize schema
   schema_definition <- paste0(get_header(engine, table),'\n', time_dimension_xml, '\n', dimension_xml,'\n\n',measure_xml,'\n',get_footer())
   if(debug) cat('Schema defined. \n')
-    #print(nchar(schema_definition)) # Useful for debugging
 
   # Generate connection file and write to specified connection  
   if(!is.na(data_source_dest)) {

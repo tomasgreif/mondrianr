@@ -22,6 +22,8 @@
 
 get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {
   
+  if(debug) cat('Preparing table design for table:',table,'\n')
+  
   if(engine=='PostgreSQL') {
     
     table_name<-paste(parse_table_name(engine=engine,table=table),collapse='.')
@@ -51,7 +53,7 @@ get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {
     table_design$schema <- NA
   }
 
-  if(debug) cat('Table design created. \n')
+  if(debug) cat('   Table design created. \n')
   
   table_design
 
