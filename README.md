@@ -7,7 +7,7 @@ Data analysis in Saiku is similar to using pivot tables in Excel or Libre Office
 
 Note: When creating traditional Mondrian schema we typically work with on fact table (where measures are stored) and one or more dimensions. For example we can have fact table with sales amount and keys to dimensions like time, product, customer, ... `mondrianr` builds schema in such way that input table is both fact table and dimension at the same time. While this is not traditional design, it still complies with Mondrian schema definition.
 
-Main features:
+Main features
 ------------------
 
  - Generates Mondrian schema for PostgreSQL table or R data frame
@@ -17,13 +17,13 @@ Main features:
  - User can define what aggregators will be used
  - User can define what columns will be used as dimensions
  
-Main functions:
+Main functions
 -----------------
  - create_schema() - function to generate mondrian schema
  
 Installation:
 ----------------
-### Install `mondrianr`:
+### Install `mondrianr`
 ``` 
      library(devtools)
      install_github('mondrianr','tomasgreif')
