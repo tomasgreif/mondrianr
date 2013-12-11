@@ -19,7 +19,8 @@
 #' file name. Optional
 #' @param time_table Name of table with time dimension. If PostgreSQL than this should be name of existing table
 #' with columns \code{time_date, year_number, quarter_number, month_number}. If R than any name can be used as
-#' time dimension is created dynamically. Required.
+#' time dimension is created dynamically. Optional. If not used than date columns will be treated as generic
+#' dimension.
 #' @param debug Print additional information useful for debugging.
 #' @export 
 #' 
@@ -33,15 +34,15 @@ create_schema <- function(engine, table, primary_key, con, dimension=NA, aggrega
   final_design    <- get_final_design(engine=engine,default_design=default_design,dimension=dimension,aggregator=aggregator, debug=debug)
 
   # Generate generic dimensions  
-  dimension_xml <- get_generic_dimension_xml(engine=engine, final_design=final_design, table=table, primary_key=primary_key)
+  dimension_xml <- get_generic_dimension_xml(engine=engine, final_design=final_design, table=table, primary_key=primary_key, debug=debug)
 
   # Generate time dimensions
-  time_dimension_xml <- get_time_dimension_xml(engine=engine,time_table=time_table, final_design=final_design,con=con)
+  time_dimension_xml <- get_time_dimension_xml(engine=engine,time_table=time_table, final_design=final_design,con=con, debug=debug)
 
   # Generate measures for numeric variables
   measure <- get_measure(final_design, debug=debug)
 
-  measure_xml <- get_measure_xml(measure)
+  measure_xml <- get_measure_xml(measure,debug=debug)
 
   # Finalize schema
   schema_definition <- paste0(get_header(engine, table),'\n', time_dimension_xml, '\n', dimension_xml,'\n\n',measure_xml,'\n',get_footer())

@@ -21,18 +21,25 @@ prepare_infrastructure <- function(engine=NA, table=NA, time_table=NA, debug=FAL
     dbWriteTable(tmpdb,table,get(table))
     
     #------ Generate time dimension
-    MaxTime <- '2015-01-01'
-    MinTime <- '2001-01-01'
-    ddiff <- as.integer(as.Date(MaxTime)) - as.integer(as.Date(MinTime))
-    tmp_time <- data.frame(time_date = as.Date(MinTime) + seq(1:ddiff))
-    tmp_time$month_number <- as.integer(format(tmp_time$time_date, "%m"))
-    tmp_time$year_number <- as.integer(format(tmp_time$time_date, "%Y"))
-    tmp_time$quarter_number[tmp_time$month_number %in% 1:3] <- 1
-    tmp_time$quarter_number[tmp_time$month_number %in% 4:6] <- 2
-    tmp_time$quarter_number[tmp_time$month_number %in% 7:9] <- 3
-    tmp_time$quarter_number[tmp_time$month_number %in% 10:12] <- 4
+    if (!is.na(time_table)) {
+      time_design <- get_table_design('R',table=table)
+      date_columns <- time_design[time_design$type=='date', 'name']
+      
+      min_date <- min(apply(get(table)[,date_columns], MARGIN=2, min,na.rm=TRUE), na.rm=TRUE)
+      max_date <- min(apply(get(table)[,date_columns], MARGIN=2, max,na.rm=TRUE), na.rm=TRUE)
+      
+      ddiff <- as.integer(as.Date(max_date)) - as.integer(as.Date(min_date))
+      tmp_time <- data.frame(time_date = as.Date(min_date) + seq(1:ddiff))
+      tmp_time$month_number <- as.integer(format(tmp_time$time_date, "%m"))
+      tmp_time$year_number <- as.integer(format(tmp_time$time_date, "%Y"))
+      tmp_time$quarter_number[tmp_time$month_number %in% 1:3] <- 1
+      tmp_time$quarter_number[tmp_time$month_number %in% 4:6] <- 2
+      tmp_time$quarter_number[tmp_time$month_number %in% 7:9] <- 3
+      tmp_time$quarter_number[tmp_time$month_number %in% 10:12] <- 4
+      
+      dbWriteTable(tmpdb,time_table,tmp_time)           
+    }
 
-    dbWriteTable(tmpdb,time_table,tmp_time)     
     
     #------ Disconnect     
     dbDisconnect(tmpdb)      

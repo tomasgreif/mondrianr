@@ -23,20 +23,24 @@
 
 get_generic_dimension_xml <- function(engine, final_design, table, primary_key, debug=FALSE) {
 
-  table_name <- parse_table_name(engine, table)
+  if(debug) cat('Creating XML for generic dimensios. \n')
   
-  dimension <- final_design[final_design$dimension, ]
+  dimension   <- final_design[final_design$dimension, ]
+  dimensions  <- nrow(dimension)
   
-  # todo: hard fix pro zamezeni konfliktu generic a time dimension
-  dimension <- dimension[dimension$class != 'date', ]
-  
-  if(!is.na(table_name[1])) {
-    schema <- paste0(' schema="',table_name[1],'"')
-  } else {
-    schema <- character(0)
-  }
-  
-  dimension_xml <- paste('
+  if(dimensions > 0) {
+    table_name <- parse_table_name(engine, table)
+    
+    # todo: hard fix pro zamezeni konfliktu generic a time dimension
+    dimension <- dimension[dimension$class != 'date', ]
+    
+    if(!is.na(table_name[1])) {
+      schema <- paste0(' schema="',table_name[1],'"')
+    } else {
+      schema <- character(0)
+    }
+    
+    dimension_xml <- paste('
     <Dimension type="StandardDimension" visible="true" foreignKey="',primary_key,'" highCardinality="false" name="',dimension$clean_name,'">
      <Hierarchy name="',dimension$clean_name,'" visible="true" hasAll="true" primary_key="',primary_key,'">
      <Table name="',table_name[2],'"', schema ,'></Table>
@@ -44,8 +48,11 @@ get_generic_dimension_xml <- function(engine, final_design, table, primary_key, 
       </Level>
      </Hierarchy>
     </Dimension>',sep='', collapse='')  
+    
+    if(debug) cat('   Number of generic dimensions: ',dimensions,'\n')    
+    if(debug) cat('   XML for generic dimensions created. \n')    
+  }
 
-  if(debug) cat('XML for generic dimensions created. \n')
   
   dimension_xml
 
