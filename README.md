@@ -50,21 +50,21 @@ create_schema(engine='R',
               table='big_portfolio',
               primary_key='id',
               time_table = 'any_name',
-              schema_dest='~/Applications/Saiku/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/foodmart/test.xml',
-              data_source_dest='~/Applications/Saiku/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/saiku-datasources/test')
+              schema_dest='/destination_folder/test.xml',
+              data_source_dest='/destination_folder/test')
 ```
+Note: do not forget to set correct destinations for `schema_dest` and `data_source_dest`.
+
 For PostgreSQL table:
-
- - import data frame `big_portfolio` to PostgreSQL
-
 ```
 create_schema(engine='PostgreSQL',
                table='public.big_portfolio',
                primary_key='id',
                con=c('usr','pwd','db','host','port'),
-               schema_dest='~/Applications/Saiku/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/foodmart/test.xml',
-               data_source_dest='~/Applications/Saiku/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/saiku-datasources/test')
+               schema_dest='/destination_folder/test.xml',
+               data_source_dest='/destination_folder/test')
 ```               
+Note: do not forget to import data to PostgreSQL first. Use valid connection definition (`con`) and set correct destinations for `schema_dest` and `data_source_dest`.
 
 If anything goes well, than you can get something like the following in Saiku:
 
