@@ -25,6 +25,8 @@
 #' @export 
 get_measure <- function(final_design, debug=FALSE) {
 
+  if(debug) cat('Transforming aggregators into individual measures (get_measure). \n')  
+  
   aggregators <- c('avg','count','distinct-count','max','min','sum')
   aggregators_names <- c('Avg','#','Dcnt','Max','Min','Sum')
 
@@ -42,7 +44,7 @@ get_measure <- function(final_design, debug=FALSE) {
   
   measure <- sqldf("select name, schema, aggregator_name, measure_name from measure order by measure_name;")
 
-  if(debug) cat('Measures analyzed and transformed into rows. \n')  
+  if(debug) cat('   Done. Number of measures:', nrow(measure), '\n')  
   
   measure
   

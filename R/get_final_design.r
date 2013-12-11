@@ -12,6 +12,8 @@
 
 get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA, debug=FALSE) {
   
+  if(debug) cat('Creating final design. \n')
+  
   final_design <- default_design
   
   if(!(is.na(dimension))) {
@@ -24,15 +26,8 @@ get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA
     final_design <- sqldf(sql, drv='SQLite')
   }      
 
-  if(debug) cat('Final design created. \n')
+  if(debug) cat('   Final design created. Number of rows:', nrow(final_design),'\n')
   
   final_design
      
 }
-
-#
-
-#default_designx <-  get_default_design('PostgreSQL',get_table_design('PostgreSQL',con=c('tgr','Tms83Grf','tgr','localhost','5432'),table='public.big_portfolio'),primary_key='id')
-#load_all()
-#get_final_design(engine='PostgreSQL',default_design=default_designx)
-#get_final_design(engine='PostgreSQL',default_design=get_default_design('PostgreSQL',get_table_design('PostgreSQL',con=c('tgr','Tms83Grf','tgr','localhost','5432'),table='public.big_portfolio'),primary_key='id'))

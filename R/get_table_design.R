@@ -53,7 +53,7 @@ get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {
     table_design$schema <- NA
   }
 
-  if(debug) cat('   Table design created. \n')
+  if(debug) cat('   Table design created. Number of columns:', nrow(table_design), '\n')
   
   table_design
 

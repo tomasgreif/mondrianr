@@ -34,15 +34,16 @@ create_schema <- function(engine, table, primary_key, con, dimension=NA, aggrega
   default_design  <- get_default_design(engine=engine, table_design=table_design,primary_key=primary_key,debug=debug)
   final_design    <- get_final_design(engine=engine,default_design=default_design,dimension=dimension,aggregator=aggregator, debug=debug)
 
-  # Generate generic dimensions  
+  # Generate XML for generic dimensions  
   dimension_xml <- get_generic_dimension_xml(engine=engine, final_design=final_design, table=table, time_table=time_table, primary_key=primary_key, debug=debug)
 
-  # Generate time dimensions
+  # Generate XML for time dimensions
   time_dimension_xml <- get_time_dimension_xml(engine=engine,time_table=time_table, final_design=final_design,con=con, debug=debug)
 
   # Generate measures for numeric variables
   measure <- get_measure(final_design, debug=debug)
 
+  # Generate XML for measures
   measure_xml <- get_measure_xml(measure,debug=debug)
 
   # Finalize schema

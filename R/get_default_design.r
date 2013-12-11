@@ -30,6 +30,8 @@
 
 get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
   
+  if(debug) cat('Creating default design. \n')  
+  
   default_mapping <- get_default_mapping(engine)
   
   sql <- paste0(
@@ -48,7 +50,7 @@ get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
 
   default_design$clean_name <-standardize_name(default_design$name)
 
-  if(debug) cat('Default design created. \n')
+  if(debug) cat('   Default design created. Number of rows ', nrow(default_design) ,'\n')
   
   default_design
   

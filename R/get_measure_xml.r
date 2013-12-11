@@ -21,11 +21,14 @@
 #' @export 
 
 get_measure_xml <- function(measure, debug=FALSE) {
+  
+  if(debug) cat('Creating XML for measures. \n')
+  
   measure_xml <- paste0(
     '<Measure name="',measure$measure_name,'" column="',measure$name,'" aggregator="',measure$aggregator_name,'" visible="true"></Measure>'
     , collapse='\n')
   
-  if(debug) cat('XML for measures created. \n')
+  if(debug) cat('   XML for measures created. \n')
   
   measure_xml
   
