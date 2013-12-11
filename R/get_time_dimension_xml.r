@@ -10,21 +10,26 @@
 #' 
 #' @export 
 
-get_time_dimension_xml <- function(engine,time_table,final_design,con, debug=FALSE) {
+get_time_dimension_xml <- function(engine,time_table=NA,final_design,con, debug=FALSE) {
   
-  time_dimension <- final_design[final_design$class=='date',]
-  
-  table_name <- parse_table_name(engine, time_table)
-
-  if(!is.na(table_name[1])) {
-    schema <- paste0(' schema="',table_name[1],'"')
-  } else {
-    schema <- character(0)
-  }
+  if(debug) cat('Creating XML for time dimension. \n')  
+  if(debug & is.na(time_table)) cat('   No time table specified, there is nothing to create.\n')
   
   time_dimension_xml <- character(0)
   
-  if(nrow(time_dimension) > 0) {
+  time_dimension  <- final_design[final_design$class=='date',]
+  time_dimensions <- nrow(time_dimension)
+
+  if(time_dimensions > 0 & !is.na(time_table)) {
+  
+    table_name <- parse_table_name(engine, time_table)
+
+    if(!is.na(table_name[1])) {
+      schema <- paste0(' schema="',table_name[1],'"')
+    } else {
+      schema <- character(0)
+    }
+  
     time_dimension_xml <- paste0('
      <Dimension type="TimeDimension" visible="true" foreignKey="',time_dimension$name,'" highCardinality="false" name="',time_dimension$clean_name,'">
        <Hierarchy name="Time Hierarchy" visible="true" hasAll="true" primaryKey="time_date">
@@ -39,10 +44,10 @@ get_time_dimension_xml <- function(engine,time_table,final_design,con, debug=FAL
       </Dimension>',collapse='')    
   }
   
-  if(debug) cat('XML for time dimensions created. \n')  
+  if(debug & !is.na(time_table)) cat('   Number of time dimenions: ',time_dimensions,'\n')  
+  if(debug) cat('   Creation of XML for time dimensions finished. \n')  
   
   time_dimension_xml
 
 }
-
 
