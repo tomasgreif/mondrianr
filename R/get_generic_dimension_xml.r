@@ -7,6 +7,7 @@
 #' @param engine Data engine. See function \code{\link{create_schema}} for details.
 #' @param final_design Final schema design. See function \code{\link{get_final_design}} for details.
 #' @param table Table for which connection file should be created (used to generate name).
+#' @param time_table Time table. See function \code{\link{create_schema}} for details.
 #' @param primary_key Primary key of \code{table}.
 #' @param debug Print additional information useful for debugging.
 #' @examples
@@ -21,25 +22,26 @@
 #' 
 #' @export 
 
-get_generic_dimension_xml <- function(engine, final_design, table, primary_key, debug=FALSE) {
+get_generic_dimension_xml <- function(engine, final_design, table, time_table=NA, primary_key, debug=FALSE) {
 
   if(debug) cat('Creating XML for generic dimensios. \n')
   
   dimension   <- final_design[final_design$dimension, ]
   dimensions  <- nrow(dimension)
-  
+
   if(dimensions > 0) {
     table_name <- parse_table_name(engine, table)
     
-    # todo: hard fix pro zamezeni konfliktu generic a time dimension
-    dimension <- dimension[dimension$class != 'date', ]
+    if (!is.na(time_table)) {
+      dimension <- dimension[dimension$class != 'date', ]  
+    }
     
     if(!is.na(table_name[1])) {
       schema <- paste0(' schema="',table_name[1],'"')
     } else {
       schema <- character(0)
     }
-    
+
     dimension_xml <- paste('
     <Dimension type="StandardDimension" visible="true" foreignKey="',primary_key,'" highCardinality="false" name="',dimension$clean_name,'">
      <Hierarchy name="',dimension$clean_name,'" visible="true" hasAll="true" primary_key="',primary_key,'">
@@ -51,10 +53,13 @@ get_generic_dimension_xml <- function(engine, final_design, table, primary_key, 
     
     if(debug) cat('   Number of generic dimensions: ',dimensions,'\n')    
     if(debug) cat('   XML for generic dimensions created. \n')    
+
   }
 
   
   dimension_xml
 
 }
+
+
   
