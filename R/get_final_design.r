@@ -26,6 +26,10 @@ get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA
     final_design <- sqldf(sql, drv='SQLite')
   }      
 
+  if(!all(nchar(final_design$aggregator) == 6)) {
+    stop('Cannot create final design. Some aggregator is not defined as string with 6 digits. Check default mapping and aggregator argument.')
+  }
+  
   if(debug) cat('   Final design created. Number of rows:', nrow(final_design),'\n')
   
   final_design
