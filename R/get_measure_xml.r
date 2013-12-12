@@ -7,8 +7,6 @@
 #' @param measure Data frame with measures. See \code{\link{get_measure}} for details.
 #' @param debug Print additional information useful for debugging.
 #' @examples
-#' get_data_source_definition('R','mtcars','~/schema.xml')
-#' get_data_source_definition('PostgreSQL','big_portfolio.xml','~/schema.xml',c('usr','pwd','db','host','port'))
 #' mtcars2 <- mtcars
 #' mtcars2$id <- seq(1:nrow(mtcars2))
 #' mtcars2$vs <- as.integer(mtcars2$vs)

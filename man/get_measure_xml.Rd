@@ -19,8 +19,6 @@
   XML that will be used in Mondrian schema.
 }
 \examples{
-get_data_source_definition('R','mtcars','~/schema.xml')
-get_data_source_definition('PostgreSQL','big_portfolio.xml','~/schema.xml',c('usr','pwd','db','host','port'))
 mtcars2 <- mtcars
 mtcars2$id <- seq(1:nrow(mtcars2))
 mtcars2$vs <- as.integer(mtcars2$vs)

@@ -9,8 +9,8 @@
 #' @param con Connection. See \code{\link{create_schema}} for details.
 #' @param debug Print additional information useful for debugging.
 #' @examples \dontrun{
-#' get_data_source_definition('R','mtcars','~/schema.xml')
-#' get_data_source_definition('PostgreSQL','big_portfolio.xml','~/schema.xml',c('usr','pwd','db','host','port'))
+#' create_data_source_definition('R','mtcars','~/schema.xml','~/data_source')
+#' create_data_source_definition('PostgreSQL','big_portfolio.xml','~/schema.xml','~/data_source',c('usr','pwd','db','host','port'))
 #' }
 #' @export 
 create_data_source_definition <- function(engine, table, schema_dest, data_source_dest, con, debug=FALSE) {
