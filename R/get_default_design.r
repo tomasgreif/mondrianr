@@ -32,6 +32,10 @@ get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
   
   if(debug) cat('Creating default design. \n')  
   
+  if(nrow(table_design[table_design$name==primary_key, ])==0) {
+    stop('Column defined as primary key does not exist in table design.')
+  }
+  
   default_mapping <- get_default_mapping(engine)
   
   sql <- paste0(
@@ -55,5 +59,3 @@ get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
   default_design
   
 }
-
-

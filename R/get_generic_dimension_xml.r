@@ -55,7 +55,6 @@ get_generic_dimension_xml <- function(engine, final_design, table, time_table=NA
     if(debug) cat('   XML for generic dimensions created. \n')    
 
   }
-
   
   dimension_xml
 

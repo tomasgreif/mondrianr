@@ -25,9 +25,12 @@
 #' @param debug Print additional information useful for debugging.
 #' @export 
 #' 
-create_schema <- function(engine, table, primary_key, con, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,
+create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,
                            time_table=NA,debug=FALSE) {
 
+  check_inputs(engine=engine, table=table, primary_key=primary_key, con=con, dimension=dimension, aggregator=aggregator,
+               schema_dest=schema_dest,data_source_dest=data_source_dest,time_table=time_table,debug=debug)
+  
   prepare_infrastructure(engine=engine, table=table, time_table=time_table, debug=debug)
 
   table_design    <- get_table_design(engine=engine,table=table,con=con,debug=debug)

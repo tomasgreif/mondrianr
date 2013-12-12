@@ -3,7 +3,7 @@
 \title{Get XML for generic dimension}
 \usage{
   get_generic_dimension_xml(engine, final_design, table,
-    primary_key, debug = FALSE)
+    time_table = NA, primary_key, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -14,6 +14,9 @@
 
   \item{table}{Table for which connection file should be
   created (used to generate name).}
+
+  \item{time_table}{Time table. See function
+  \code{\link{create_schema}} for details.}
 
   \item{primary_key}{Primary key of \code{table}.}
 

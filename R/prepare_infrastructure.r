@@ -12,6 +12,8 @@
 
 prepare_infrastructure <- function(engine=NA, table=NA, time_table=NA, debug=FALSE) {
 
+  if(debug) cat('Preparing infrastructure. \n')
+  
   if(engine=='R') {
     # For R engine, we will write data to temporary SQLite database (because mondrian can connect to SQLite database)
     file.remove('__this_is_temporary_db__.db')
@@ -45,7 +47,7 @@ prepare_infrastructure <- function(engine=NA, table=NA, time_table=NA, debug=FAL
     dbDisconnect(tmpdb)      
   }
 
-  if(debug) cat('Infrastructure prepared. \n')
+  if(debug) cat('   Infrastructure prepared. \n')
   
   TRUE
 }

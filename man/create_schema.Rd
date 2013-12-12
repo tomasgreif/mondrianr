@@ -2,9 +2,10 @@
 \alias{create_schema}
 \title{Create Mondrian schema}
 \usage{
-  create_schema(engine, table, primary_key, con,
-    dimension = NA, aggregator = NA, schema_dest = NA,
-    data_source_dest = NA, time_table = NA, debug = FALSE)
+  create_schema(engine = NA, table = NA, primary_key = NA,
+    con = NA, dimension = NA, aggregator = NA,
+    schema_dest = NA, data_source_dest = NA,
+    time_table = NA, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. Valid options are: \code{R},
@@ -43,7 +44,12 @@
   PostgreSQL than this should be name of existing table
   with columns \code{time_date, year_number,
   quarter_number, month_number}. If R than any name can be
-  used as time dimension is created dynamically. Required.}
+  used as time dimension is created dynamically. Optional.
+  If not used than date columns will be treated as generic
+  dimension. (ToDo: Currently, if you do not use any name
+  for R engine, you will get integers instead of dates in
+  Saiku, because RSQLite stores dates as integers. To be
+  fixed in future version.)}
 
   \item{debug}{Print additional information useful for
   debugging.}
