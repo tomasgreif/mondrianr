@@ -42,7 +42,7 @@ get_measure <- function(final_design, debug=FALSE) {
   
   measure$measure_name <- paste0(measure$clean_name,'-',measure$aggregator_clean_name)
   
-  measure <- sqldf("select name, schema, aggregator_name, measure_name from measure order by measure_name;")
+  measure <- sqldf("select name, schema, aggregator_name, measure_name from measure order by measure_name;", drv='SQLite')
 
   if(debug) cat('   Done. Number of measures:', nrow(measure), '\n')  
   
