@@ -19,7 +19,6 @@ Collate:
     'standardize_name.r'
     'mondrianr-package.r'
     'create_schema.r'
-    'get_data_source_definition.r'
     'get_default_design.r'
     'get_default_mapping.r'
     'get_final_design.r'
@@ -36,3 +35,5 @@ Collate:
     'check_database_connection.r'
     'check_inputs.r'
     'check_table_exists.r'
+    'create_data_source_definition.r'
+    'create_schema_xml.r'

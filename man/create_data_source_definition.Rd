@@ -1,9 +1,9 @@
-\name{get_data_source_definition}
-\alias{get_data_source_definition}
-\title{Get data source definition for Saiku}
+\name{create_data_source_definition}
+\alias{create_data_source_definition}
+\title{Creates data source definition for Saiku}
 \usage{
-  get_data_source_definition(engine, table, schema_dest,
-    con, debug = FALSE)
+  create_data_source_definition(engine, table, schema_dest,
+    data_source_dest, con, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -15,6 +15,9 @@
   \item{schema_dest}{Where schema definition will be
   stored. Valid path, including file name with schema.}
 
+  \item{data_source_dest}{Where data source definition file
+  should be written.}
+
   \item{con}{Connection. See \code{\link{create_schema}}
   for details.}
 
@@ -22,7 +25,8 @@
   debugging.}
 }
 \description{
-  Returns valid data source definition for Saiku
+  Returns valid data source definition for Saiku and writes
+  it to destination
 }
 \examples{
 \dontrun{

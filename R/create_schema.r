@@ -50,7 +50,8 @@ create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension
                schema_dest=schema_dest,data_source_dest=data_source_dest,time_table=time_table,debug=debug)
   
   prepare_infrastructure(engine=engine, table=table, time_table=time_table, debug=debug)
-
+  
+  # Create schema design
   table_design    <- get_table_design(engine=engine,table=table,con=con,debug=debug)
   default_design  <- get_default_design(engine=engine, table_design=table_design,primary_key=primary_key,debug=debug)
   final_design    <- get_final_design(engine=engine,default_design=default_design,dimension=dimension,aggregator=aggregator, debug=debug)
@@ -67,19 +68,11 @@ create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension
   # Generate XML for measures
   measure_xml <- get_measure_xml(measure,debug=debug)
 
-  # Finalize schema
-  schema_definition <- paste0(get_header(engine, table),'\n', time_dimension_xml, '\n', dimension_xml,'\n\n',measure_xml,'\n',get_footer())
-  if(debug) cat('Schema defined. \n')
-
   # Generate connection file and write to specified connection  
-  if(!is.na(data_source_dest)) {
-    data_source_definition <- get_data_source_definition(engine=engine,table,schema_dest=schema_dest,con=con)  
+  create_data_source_definition(engine=engine, table=table, schema_dest=schema_dest, data_source_dest, con=con, debug=debug)  
 
-    writeLines(data_source_definition, con=data_source_dest)
-    if(debug) cat('Data source written to destination. \n')
-  }
+  # Finalize schema and write it to destination
+  create_schema_xml(engine=engine,table=table,time_dimension_xml=time_dimension_xml,dimension_xml=dimension_xml,measure_xml=measure_xml,schema_dest=schema_dest,debug=debug)
   
-  # Write Cube
-  writeLines(schema_definition, con=schema_dest)
-  if(debug) cat('Cube written to destination. \n')
+  cat('Process successfuly finished. \n')
   }

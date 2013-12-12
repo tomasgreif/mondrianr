@@ -1,6 +1,7 @@
 export(check_inputs)
+export(create_data_source_definition)
 export(create_schema)
-export(get_data_source_definition)
+export(create_schema_xml)
 export(get_default_design)
 export(get_default_mapping)
 export(get_final_design)
