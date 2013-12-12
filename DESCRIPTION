@@ -13,7 +13,8 @@ Depends:
 Imports:
     sqldf,
     RSQLite,
-    RPostgreSQL
+    RPostgreSQL,
+    DBI
 License: GPL-2
 LazyData: true
 Collate:
