@@ -39,6 +39,9 @@ class, type, dimension, aggregator
 'text','character varying',TRUE,'010000'
 'text','text',TRUE,'010000'
 'date','date',TRUE,'010000'
+'bool','boolean',TRUE,'010000'
+'timestamp','timestamp without time zone',FALSE,'000000'
+
 ")
 
 } else if (engine=='R') {
