@@ -38,6 +38,13 @@ get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
   
   default_mapping <- get_default_mapping(engine)
   
+  if(!all(table_design$type %in% default_mapping$type))  {
+    warning('The following data types are in table, but not in default mapping:',
+            paste(unique(table_design[!(table_design$type %in% default_mapping$type),"type"]),collapse=", "), '\n',
+            'You have to extend default mapping defined in function get_default_mapping.'
+    )
+  }
+  
   sql <- paste0(
                 "select 
                     td.name,
