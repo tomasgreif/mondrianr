@@ -10,11 +10,9 @@ Author: Tomas Greif
 Maintainer: Tomas Greif <greif.tomas@gmail.com>
 Depends:
     R (>= 3.0.2),
-Imports:
     sqldf,
     RSQLite,
-    RPostgreSQL,
-    DBI
+    RPostgreSQL
 License: GPL-2
 LazyData: true
 Collate:
