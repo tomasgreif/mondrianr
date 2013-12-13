@@ -47,11 +47,12 @@ class, type, dimension, aggregator
 } else if (engine=='R') {
 default_mapping <- read.table(header=T, sep=",",colClasses=c('character','character','logical','character'), text="
 class, type, dimension, aggregator
-'integer','integer',TRUE,'111111'
-'numeric','numeric',FALSE,'110111'
-'numeric','double',FALSE,'110111'
-'text','character',TRUE,'010000'
+'integer','integer',FALSE,'100111'
+'numeric','numeric',FALSE,'100111'
+'numeric','double',FALSE,'100111'
+'text','character',FALSE,'010000'
 'date','date',TRUE,'010000'
+'factor','factor',TRUE,'000000'
 ")  
 }
 
