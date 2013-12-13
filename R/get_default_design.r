@@ -10,7 +10,8 @@
 #' \code{class} \tab See \code{\link{get_default_mapping}} \cr
 #' \code{type} \tab See \code{\link{get_default_mapping}} \cr
 #' \code{dimension} \tab See \code{\link{get_default_mapping}} \cr
-#' \code{aggregator} \tab Defines default aggregators for given data type. Character string consisting of \cr
+#' \code{aggregator} \tab Defines default aggregators for given data type. Character string consisting of exactly 6 digits.\cr
+#' \code{is_primary_key} \tab Flag indicating column with primary key. \code{1} if primary key, \code{0} otherwise. \cr
 #' \code{clean_name} \tab User-friendly column name. \cr
 #' }
 
@@ -19,13 +20,7 @@
 #' @param primary_key Primary key. See function \code{\link{create_schema}} for details.
 #' @param debug Print additional information useful for debugging.
 #' @examples
-#' mtcars2 <- mtcars
-#' mtcars2$id <- seq(1:nrow(mtcars2))
-#' mtcars2$vs <- as.integer(mtcars2$vs)
-#' mtcars2$am <- as.integer(mtcars2$am)
-#' mtcars2$gear <- as.integer(mtcars2$gear)
-#' mtcars2$carb <- as.integer(mtcars2$carb)
-#' get_default_design('R',get_table_design('R','mtcars2'),primary_key='id')
+#' get_default_design('R',get_table_design('R','german_credit'),primary_key='id')
 #' @export 
 
 get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
@@ -52,7 +47,8 @@ get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
                     dm.class,
                     dm.type,
                     dm.dimension,
-                    case when td.name='",primary_key,"' then '010000' else dm.aggregator end as aggregator
+                    case when td.name='",primary_key,"' then '010000' else dm.aggregator end as aggregator,
+                    case when td.name='",primary_key,"' then 1 else 0 end as is_primary_key
                   from 
                     default_mapping dm
                     join table_design td using(type)")
