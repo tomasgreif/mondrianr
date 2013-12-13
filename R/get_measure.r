@@ -13,14 +13,8 @@
 #' 
 #' @param final_design Final schema design. See function \code{\link{get_final_design}} for details.
 #' @param debug Print additional information useful for debugging.
-#' @examples
-#' mtcars2 <- mtcars
-#' mtcars2$id <- seq(1:nrow(mtcars2))
-#' mtcars2$vs <- as.integer(mtcars2$vs)
-#' mtcars2$am <- as.integer(mtcars2$am)
-#' mtcars2$gear <- as.integer(mtcars2$gear)
-#' mtcars2$carb <- as.integer(mtcars2$carb)
-#' get_measure(get_final_design('R',get_default_design('R',get_table_design('R','mtcars2'),primary_key='id')))
+#' @examples 
+#' get_measure(get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
 #' 
 #' @export 
 get_measure <- function(final_design, debug=FALSE) {
@@ -30,7 +24,7 @@ get_measure <- function(final_design, debug=FALSE) {
   aggregators <- c('avg','count','distinct-count','max','min','sum')
   aggregators_names <- c('Avg','#','Dcnt','Max','Min','Sum')
 
-  measure <- final_design[as.integer(final_design$aggregator)>0, ]
+  measure <- final_design[as.integer(final_design$aggregator)>0 & final_design$is_primary_key==0, ]
 
   measure <- cbind(do.call("rbind", replicate(6, measure, simplify = FALSE)),id_measure=rep(1:6, each=nrow(measure)))
 
@@ -42,7 +36,12 @@ get_measure <- function(final_design, debug=FALSE) {
   
   measure$measure_name <- paste0(measure$clean_name,'-',measure$aggregator_clean_name)
   
+  primary_key_measure <- sqldf("select name, schema, 'count' as aggregator_name, 'Count (PK)' as measure_name from final_design where is_primary_key =1",
+                               drv='SQLite')
+  
   measure <- sqldf("select name, schema, aggregator_name, measure_name from measure order by measure_name;", drv='SQLite')
+  
+  measure <- rbind(primary_key_measure, measure)
 
   if(debug) cat('   Done. Number of measures:', nrow(measure), '\n')  
   
