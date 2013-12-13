@@ -46,10 +46,12 @@ get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {
   }
   
   if(engine=='R') {
-    table_design <- data.frame(type=sapply(get(table), typeof), datetype=sapply(names(get(table)), function(x) inherits(get(table)[[x]], "Date")))
+    table_design <- data.frame(type=sapply(get(table), typeof), 
+                               datetype=sapply(names(get(table)), function(x) inherits(get(table)[[x]], "Date")),
+                               is_factor=sapply(get(table), is.factor))
     table_design$name <- row.names(table_design)
     row.names(table_design) <- NULL
-    table_design <- sqldf("select name, case when datetype then 'date' else type end as type from table_design", drv='SQLite')
+    table_design <- sqldf("select name, case when is_factor then 'factor' when datetype then 'date' else type end as type from table_design", drv='SQLite')
     table_design$schema <- NA
   }
 
