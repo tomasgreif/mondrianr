@@ -41,7 +41,6 @@ prepare_infrastructure <- function(engine=NA, table=NA, time_table=NA, debug=FAL
       
       dbWriteTable(tmpdb,time_table,tmp_time)           
     }
-
     
     #------ Disconnect     
     dbDisconnect(tmpdb)      
