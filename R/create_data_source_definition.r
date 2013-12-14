@@ -25,22 +25,22 @@ create_data_source_definition <- function(engine, table, schema_dest, data_sourc
     if(engine=='PostgreSQL') {
       data_source_definition <- paste0(
         'type=OLAP
-      name=',table,'
-      driver=mondrian.olap4j.MondrianOlap4jDriver
-      location=jdbc:mondrian:Jdbc=jdbc:postgresql://', con[4],':', con[5],'/', con[3],'; \\
-      Catalog=', schema_dest,';JdbcDrivers=org.postgresql.Driver;
-      username=', con[1],'
-      password=', con[2]
+        name=PgSQL
+        driver=mondrian.olap4j.MondrianOlap4jDriver
+        location=jdbc:mondrian:Jdbc=jdbc:postgresql://', con[4],':', con[5],'/', con[3],'; \\
+        Catalog=', schema_dest,';JdbcDrivers=org.postgresql.Driver;
+        username=', con[1],'
+        password=', con[2]
       )    
     }
     
     if(engine=='R') {
       data_source_definition <- paste0(
         'type=OLAP
-      name=RData 
-      driver=mondrian.olap4j.MondrianOlap4jDriver
-      location=jdbc:mondrian:Jdbc=jdbc:sqlite:',getwd(),'/__this_is_temporary_db__.db; \\
-      Catalog=',schema_dest,';JdbcDrivers=org.sqlite.JDBC 
+        name=RData 
+        driver=mondrian.olap4j.MondrianOlap4jDriver
+        location=jdbc:mondrian:Jdbc=jdbc:sqlite:',getwd(),'/__this_is_temporary_db__.db; \\
+        Catalog=',schema_dest,';JdbcDrivers=org.sqlite.JDBC 
       ')
     }    
 
