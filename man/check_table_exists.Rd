@@ -22,4 +22,7 @@
   connection. Function returns \code{TRUE} when table
   exists and \code{FALSE} otherwise.
 }
+\examples{
+check_table_exists('R','iris')
+}
 
