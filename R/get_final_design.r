@@ -10,6 +10,7 @@
 #' @examples
 #' get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'")
 #' get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id'),dimension="0")
+#' get_final_design('R',get_default_design('R',get_table_design('R','big_portfolio'),primary_key='id'))
 #' @export 
 
 get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA, debug=FALSE) {
