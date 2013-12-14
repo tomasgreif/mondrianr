@@ -16,4 +16,9 @@
   connection. Function returns \code{TRUE} when database
   exists and \code{FALSE} otherwise.
 }
+\examples{
+\dontrun{
+check_database_connection('PostgreSQL',c('usr','pwd','db','host','port'))
+}
+}
 

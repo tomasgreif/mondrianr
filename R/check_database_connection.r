@@ -5,23 +5,23 @@
 #' 
 #' @param engine See function \code{\link{create_schema}} for details.
 #' @param con See function \code{\link{create_schema}} for details.
+#' @examples \dontrun{
+#' check_database_connection('PostgreSQL',c('usr','pwd','db','host','port'))
+#' }
 
 check_database_connection <- function(engine, con) {
   
+  if(engine=='PostgreSQL') {
+    
     options(sqldf.RPostgreSQL.user      = con[1], 
             sqldf.RPostgreSQL.password  = con[2],
             sqldf.RPostgreSQL.dbname    = con[3],
             sqldf.RPostgreSQL.host      = con[4], 
             sqldf.RPostgreSQL.port      = con[5])
     
-    out <- tryCatch(
-{
-  sqldf("select TRUE;")
-},
-error=function(cond) {
-  out <- FALSE
-}
-    )    
-    return(out)
+    valid_connection <- tryCatch(sqldf("select TRUE;"), error=function(cond) FALSE)        
+    
   }
     
+    valid_connection
+}
