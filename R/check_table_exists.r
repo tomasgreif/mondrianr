@@ -7,6 +7,8 @@
 #' @param table See function \code{\link{create_schema}} for details.
 #' @param con See function \code{\link{create_schema}} for details.
 #' @param debug See function \code{\link{create_schema}} for details.
+#' @examples
+#' check_table_exists('R','iris')
 
 check_table_exists<- function(engine, table, con, debug=FALSE) {
 
