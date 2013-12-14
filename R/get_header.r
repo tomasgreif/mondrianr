@@ -17,7 +17,7 @@ get_header <- function(engine, table, debug=NA) {
   table_name <- parse_table_name(engine, table)
   
   schema_header <- c(paste0('<Schema name="R Generated Cube">'),
-                     paste0(' <Cube name="',table_name[2],'" visible="true" cache="true" enabled="true">'))
+                     paste0(' <Cube name="',standardize_name(table_name[2]),'" visible="true" cache="true" enabled="true">'))
   
   if (engine=='PostgreSQL') {
       # For PostgreSQL, we have to include shcema
