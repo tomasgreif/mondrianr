@@ -15,12 +15,30 @@ prepare_infrastructure <- function(engine=NA, table=NA, time_table=NA, debug=FAL
   if(debug) cat('Preparing infrastructure. \n')
   
   if(engine=='R') {
+    
+    table_real <- table
+    
     # For R engine, we will write data to temporary SQLite database (because mondrian can connect to SQLite database)
     file.remove('__this_is_temporary_db__.db')
     sqlite    <- dbDriver("SQLite")
     tmpdb <- dbConnect(sqlite,"__this_is_temporary_db__.db")           
     
-    dbWriteTable(tmpdb,table,get(table))
+    # Because SQLite would store date columns as integer, we need to update date columns to human-readable strings if no time table.
+    if(is.na(time_table)) {
+      table_design <- get_table_design('R', table)
+      date_column <- table_design[table_design$type=='date', 1]
+      # Continue only when there are some date columns      
+      if(length(date_column) > 0) {
+        # need to create copy of data frame
+        tmp_df <- get(table)
+        for (i in 1:length(date_column)) {
+          tmp_df[[date_column[i]]] <- as.character(tmp_df[[date_column[i]]])
+        }
+        table_real <- 'tmp_df'
+      }      
+    }
+    
+    dbWriteTable(tmpdb,table,get(table_real))
     
     #------ Generate time dimension
     if (!is.na(time_table)) {
