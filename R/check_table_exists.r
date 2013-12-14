@@ -1,16 +1,20 @@
 #' Check table existence
 #'
-#' Checks if table exists for given data engine and connection. Function returns \code{TRUE} when
-#' table exists and \code{FALSE} otherwise.
+#' Checks if table exists for given data engine and optional connection. Function returns \code{TRUE} when
+#' table exists and \code{FALSE} otherwise. This function does not check that table contains any data
+#' or columns at all.
 #' 
 #' @param engine See function \code{\link{create_schema}} for details.
 #' @param table See function \code{\link{create_schema}} for details.
-#' @param con See function \code{\link{create_schema}} for details.
+#' @param con Required for PostgreSQL. See function \code{\link{create_schema}} for details.
 #' @param debug See function \code{\link{create_schema}} for details.
 #' @examples
 #' check_table_exists('R','iris')
+#' 
+#' \dontrun{
+#' check_table_exists('PostgreSQL','table',c('usr','pwd','db','host','port') }
 
-check_table_exists<- function(engine, table, con, debug=FALSE) {
+check_table_exists<- function(engine, table, con=NA, debug=FALSE) {
 
   if(engine=='PostgreSQL') {
     drv <- dbDriver("PostgreSQL")
