@@ -37,3 +37,4 @@ Collate:
     'check_table_exists.r'
     'create_data_source_definition.r'
     'create_schema_xml.r'
+    'german_credit.r'
