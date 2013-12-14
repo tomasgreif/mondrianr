@@ -31,13 +31,7 @@
   date.
 }
 \examples{
-mtcars2 <- mtcars
-mtcars2$id <- seq(1:nrow(mtcars2))
-mtcars2$vs <- as.integer(mtcars2$vs)
-mtcars2$am <- as.integer(mtcars2$am)
-mtcars2$gear <- as.integer(mtcars2$gear)
-mtcars2$carb <- as.integer(mtcars2$carb)
-final_design <- get_final_design('R',get_default_design('R',get_table_design('R','mtcars2'),primary_key='id'))
-get_generic_dimension_xml('R',final_design, 'mtcars2',primary_key='id')
+final_design <- get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id'))
+get_generic_dimension_xml('R',final_design, 'german_credit',primary_key='id')
 }
 

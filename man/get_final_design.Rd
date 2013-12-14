@@ -26,4 +26,8 @@
   Takes \code{default_design} as input and modifies it
   accordingly.
 }
+\examples{
+get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'")
+get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id'),dimension="0")
+}
 
