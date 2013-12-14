@@ -20,7 +20,7 @@ check_table_exists<- function(engine, table, con, debug=FALSE) {
   }
   
   if(engine=='R') {
-    table_exists <- table %in% names(which(unlist(eapply(.GlobalEnv,is.data.frame))))
+    table_exists <- exists(table) && is.data.frame(get(table))
   }
                
   table_exists                                     
