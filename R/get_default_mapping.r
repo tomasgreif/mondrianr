@@ -60,7 +60,7 @@ class, type, dimension, aggregator
 'integer','integer',FALSE,'100111'
 'numeric','numeric',FALSE,'100111'
 'numeric','double',FALSE,'100111'
-'text','character',FALSE,'010000'
+'text','character',TRUE,'010000'
 'date','date',TRUE,'010000'
 'factor','factor',TRUE,'000000'
 ")  
