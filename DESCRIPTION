@@ -5,7 +5,7 @@ Description: Package mondrianr creates Mondrian schema from given dataset.
     tables in PostgreSQL and data frames in R. R data frames are always
     converted to SQLite database. For R data frames, time dimension is
     generated automatically.
-Version: 0.1.2
+Version: 0.1.3
 Author: Tomas Greif
 Maintainer: Tomas Greif <greif.tomas@gmail.com>
 Depends:
@@ -38,3 +38,4 @@ Collate:
     'create_data_source_definition.r'
     'create_schema_xml.r'
     'german_credit.r'
+    'testfunction.r'
