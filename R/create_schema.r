@@ -21,14 +21,6 @@
 #'    \item No aggregtor for dimensions, default for others: \code{case when dimension=1 then '000000' else aggregator end}
 #'  }
 #'  
-#'  \section{Saiku}{
-#'  Using \code{create_schema} with Saiku. If you intend to use Saiku with generated Mondrian scheme, the following destination can be typically used:
-#'  \itemize{
-#'    \item \code{schema_date}  \code{[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/foodmart/[CUBE-NAME].xml}
-#'    \item \code{data_source_dest} \code{[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/saiku-datasources/[CUBE-NAME]}
-#'  }
-#'  }
-#'
 #' @param engine Data engine. Valid options are: \code{R}, \code{PostgreSQL}. If \code{PostgreSQL} is used then
 #' \code{con} is required. Required.
 #' @param table Table for which schema should be created. In Mondrian terminology, this is fact table
@@ -48,7 +40,7 @@
 #' calculated members can be created. Every component in list has to have exactly three elements:
 #' \itemize{
 #'  \item Name of calculated member. This will be displayed as user-friendly name in Mondrian compatible analytical tools
-#'  \item Formula. MDX expression for calculated member
+#'  \item Formula. Valid MDX expression for calculated member.
 #'  \item Format. Format to apply. If default should be used then use \code{NA}.
 #' }
 #' Optional.
@@ -58,10 +50,30 @@
 #' dimension.
 #' @param debug Print additional information useful for debugging.
 #' @examples
-#' \dontrun{
-#' create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest='/home/usr/bpr.xml', data_source_dest='/home/usr/bpr')
-#' }
 #' 
+#' #----------------
+#' schema_dest <- paste0(getwd(),'/','test.xml')
+#' data_source_dest <- paste0(getwd(),'/','test')
+#'
+#' # Simple schema, no time dimension, no data source definition
+#' create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest=schema_dest)
+#' 
+#' # Create schema with time dimension
+#' create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
+#'               schema_dest=schema_dest, data_source_dest=data_source_dest)
+#'               
+#' # Modify default dimensions (create only for factors)
+#' create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
+#'               schema_dest=schema_dest, dimension="case when type='factor' then 1 else 0 end")
+#' 
+#' # Create schema with calculated members
+#' create_schema(engine='R',table='big_portfolio',primary_key='id',time_table = 'any_name',
+#'              schema_dest=schema_dest, data_source_dest=data_source_dest,
+#'              calculated_member=list(
+#'                 c('Not repaid pct','[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]',NA),
+#'                 c('Repaid pct','[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]','##.00%')
+#'             ))
+#'             
 #' @export 
 #' 
 create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,

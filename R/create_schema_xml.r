@@ -7,6 +7,7 @@
 #' @param time_dimension_xml Final XML for time dimension
 #' @param dimension_xml Final XML for dimensions
 #' @param measure_xml Final XML for measures
+#' @param calculated_member_xml Final XML for calculated members
 #' @param schema_dest Schema destination
 #' @param debug Print additional information useful for debugging.
 #' 
