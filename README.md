@@ -34,7 +34,10 @@ Note: `mondrianr` requires packages `sqldf` and `RSQLite`
 ### Install Saiku
 Follow this [guide](http://docs.analytical-labs.com/saiku/documentation/2013/08/15/quickstart.html). Download `SQLite` 
 [driver](https://bitbucket.org/xerial/sqlite-jdbc/downloads) and copy it to correct folder.
- 
+
+#### Schema and data source destination
+When using Saiku, file with data source definition points to file with schema definition. All data source definition files have to be in folder `[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/saiku-datasources/`. Every data source definition file is text file WITHOUT any extension. Cube schema can be stored everywhere where Saiku can access files. When deployed locally, you can place schema file almost anywhere (e.g. your home directory).
+
 ### Test everything works
 
 For R data frame
