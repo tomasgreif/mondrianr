@@ -17,7 +17,7 @@ get_time_dimension_xml <- function(engine,time_table=NA,final_design,con, debug=
   
   time_dimension_xml <- character(0)
   
-  time_dimension  <- final_design[final_design$class=='date',]
+  time_dimension  <- final_design[final_design$class=='date' & final_design$dimension,]
   time_dimensions <- nrow(time_dimension)
 
   if(time_dimensions > 0 & !is.na(time_table)) {
