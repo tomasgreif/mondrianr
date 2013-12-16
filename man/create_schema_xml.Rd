@@ -18,6 +18,9 @@
 
   \item{measure_xml}{Final XML for measures}
 
+  \item{calculated_member_xml}{Final XML for calculated
+  members}
+
   \item{schema_dest}{Schema destination}
 
   \item{debug}{Print additional information useful for
