@@ -25,6 +25,7 @@
   \code{measure_name} \tab User-friendly name.\cr }
 }
 \examples{
-get_measure(get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
+get_measure(get_final_design('R',
+ get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
 }
 

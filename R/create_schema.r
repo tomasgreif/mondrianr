@@ -13,11 +13,20 @@
 #'  \item For numeric data types do not create dimenions, otherwise do create dimensions: \code{case when class='numeric' then 0 else 1 end}
 #'  \item For columns a, b create dimenions and for other columns keep default value: \code{case when name in('a','b') then 1 else dimension end}
 #'  }
+#'  
 #'  Examples for aggregator:
 #'  \itemize{
 #'    \item Only count aggregator for non-numeric columns and default for other columns: \code{case when class <> 'numeric' then '010000' else aggregator end}
 #'    \item No aggregator for date and text columns and count for all others: \code{case when class in('text','numeric') then '000000' else '010000' end}
 #'    \item No aggregtor for dimensions, default for others: \code{case when dimension=1 then '000000' else aggregator end}
+#'  }
+#'  
+#'  \section{Saiku}{
+#'  Using \code{create_schema} with Saiku. If you intend to use Saiku with generated Mondrian scheme, the following destination can be typically used:
+#'  \itemize{
+#'    \item \code{schema_date}  \code{[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/foodmart/[CUBE-NAME].xml}
+#'    \item \code{data_source_dest} \code{[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/saiku-datasources/[CUBE-NAME]}
+#'  }
 #'  }
 #'
 #' @param engine Data engine. Valid options are: \code{R}, \code{PostgreSQL}. If \code{PostgreSQL} is used then
@@ -34,16 +43,29 @@
 #' order: \code{average, count, distinct-count, maximum, minimum, sum}. Argument is evaluated after argument \code{dimension}. Optional
 #' @param schema_dest Path to file where Mondrian schema will be stored. Has to include file name.
 #' @param data_source_dest Path to file where data source definition for Saiku will be stored. Has to include
-#' file name. Optional
+#' file name. Optional.
+#' @param calculated_member List defining additional calculated members (measures calculated on results of other measures). Unlimited number of 
+#' calculated members can be created. Every component in list has to have exactly three elements:
+#' \itemize{
+#'  \item Name of calculated member. This will be displayed as user-friendly name in Mondrian compatible analytical tools
+#'  \item Formula. MDX expression for calculated member
+#'  \item Format. Format to apply. If default should be used then use \code{NA}.
+#' }
+#' Optional.
 #' @param time_table Name of table with time dimension. If PostgreSQL than this should be name of existing table
 #' with columns \code{time_date, year_number, quarter_number, month_number}. If R than any name can be used as
 #' time dimension is created dynamically. Optional. If not used than date columns will be treated as generic
 #' dimension.
 #' @param debug Print additional information useful for debugging.
+#' @examples
+#' \dontrun{
+#' create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest='/home/usr/bpr.xml', data_source_dest='/home/usr/bpr')
+#' }
+#' 
 #' @export 
 #' 
 create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,
-                           time_table=NA,debug=FALSE) {
+                           time_table=NA,calculated_member=NA, debug=FALSE) {
 
   check_inputs(engine=engine, table=table, primary_key=primary_key, con=con, dimension=dimension, aggregator=aggregator,
                schema_dest=schema_dest,data_source_dest=data_source_dest,time_table=time_table,debug=debug)
@@ -66,12 +88,17 @@ create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension
 
   # Generate XML for measures
   measure_xml <- get_measure_xml(measure,debug=debug)
+  
+  # Generate XML for calculated members
+  calculated_member_xml <- get_calculated_member_xml(engine, calculated_member, debug=debug)
 
   # Generate connection file and write to specified connection  
   create_data_source_definition(engine=engine, table=table, schema_dest=schema_dest, data_source_dest, con=con, debug=debug)  
 
   # Finalize schema and write it to destination
-  create_schema_xml(engine=engine,table=table,time_dimension_xml=time_dimension_xml,dimension_xml=dimension_xml,measure_xml=measure_xml,schema_dest=schema_dest,debug=debug)
+  create_schema_xml(engine=engine,table=table,time_dimension_xml=time_dimension_xml,dimension_xml=dimension_xml,measure_xml=measure_xml,
+                    calculated_member_xml <- calculated_member_xml,
+                    schema_dest=schema_dest,debug=debug)
   
   cat('Process successfuly finished. \n')
   }

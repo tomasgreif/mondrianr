@@ -31,7 +31,8 @@
 \examples{
 \dontrun{
 create_data_source_definition('R','mtcars','~/schema.xml','~/data_source')
-create_data_source_definition('PostgreSQL','big_portfolio.xml','~/schema.xml','~/data_source',c('usr','pwd','db','host','port'))
+create_data_source_definition('PostgreSQL','big_portfolio.xml',
+ '~/schema.xml','~/data_source',c('usr','pwd','db','host','port'))
 }
 }
 

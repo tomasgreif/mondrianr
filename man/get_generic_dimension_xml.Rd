@@ -31,7 +31,8 @@
   date.
 }
 \examples{
-final_design <- get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id'))
+final_design <- get_final_design('R',
+ get_default_design('R',get_table_design('R','german_credit'),primary_key='id'))
 get_generic_dimension_xml('R',final_design, 'german_credit',primary_key='id')
 }
 

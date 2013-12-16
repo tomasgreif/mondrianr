@@ -7,7 +7,8 @@
 #' @param measure Data frame with measures. See \code{\link{get_measure}} for details.
 #' @param debug Print additional information useful for debugging.
 #' @examples
-#' measure <- get_measure(get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
+#' measure <- get_measure(get_final_design('R',
+#'  get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
 #' get_measure_xml(measure)
 #' 
 #' @export 

@@ -38,3 +38,4 @@ Collate:
     'create_data_source_definition.r'
     'create_schema_xml.r'
     'german_credit.r'
+    'get_calculated_member_xml.r'

@@ -3,7 +3,8 @@
 \title{Creates final Mondrian XML schema}
 \usage{
   create_schema_xml(engine, table, time_dimension_xml,
-    dimension_xml, measure_xml, schema_dest, debug = FALSE)
+    dimension_xml, measure_xml, calculated_member_xml,
+    schema_dest, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function

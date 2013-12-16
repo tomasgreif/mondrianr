@@ -14,7 +14,8 @@
 #' @param final_design Final schema design. See function \code{\link{get_final_design}} for details.
 #' @param debug Print additional information useful for debugging.
 #' @examples 
-#' get_measure(get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
+#' get_measure(get_final_design('R',
+#'  get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
 #' 
 #' @export 
 get_measure <- function(final_design, debug=FALSE) {

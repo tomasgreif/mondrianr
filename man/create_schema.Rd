@@ -5,7 +5,7 @@
   create_schema(engine = NA, table = NA, primary_key = NA,
     con = NA, dimension = NA, aggregator = NA,
     schema_dest = NA, data_source_dest = NA,
-    time_table = NA, debug = FALSE)
+    time_table = NA, calculated_member = NA, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. Valid options are: \code{R},
@@ -41,7 +41,18 @@
 
   \item{data_source_dest}{Path to file where data source
   definition for Saiku will be stored. Has to include file
-  name. Optional}
+  name. Optional.}
+
+  \item{calculated_member}{List defining additional
+  calculated members (measures calculated on results of
+  other measures). Unlimited number of calculated members
+  can be created. Every component in list has to have
+  exactly three elements: \itemize{ \item Name of
+  calculated member. This will be displayed as
+  user-friendly name in Mondrian compatible analytical
+  tools \item Formula. MDX expression for calculated member
+  \item Format. Format to apply. If default should be used
+  then use \code{NA}. } Optional.}
 
   \item{time_table}{Name of table with time dimension. If
   PostgreSQL than this should be name of existing table
@@ -76,15 +87,30 @@
   \code{case when class='numeric' then 0 else 1 end} \item
   For columns a, b create dimenions and for other columns
   keep default value: \code{case when name in('a','b') then
-  1 else dimension end} } Examples for aggregator:
-  \itemize{ \item Only count aggregator for non-numeric
-  columns and default for other columns: \code{case when
-  class <> 'numeric' then '010000' else aggregator end}
-  \item No aggregator for date and text columns and count
-  for all others: \code{case when class
-  in('text','numeric') then '000000' else '010000' end}
-  \item No aggregtor for dimensions, default for others:
-  \code{case when dimension=1 then '000000' else aggregator
-  end} }
+  1 else dimension end} }
+
+  Examples for aggregator: \itemize{ \item Only count
+  aggregator for non-numeric columns and default for other
+  columns: \code{case when class <> 'numeric' then '010000'
+  else aggregator end} \item No aggregator for date and
+  text columns and count for all others: \code{case when
+  class in('text','numeric') then '000000' else '010000'
+  end} \item No aggregtor for dimensions, default for
+  others: \code{case when dimension=1 then '000000' else
+  aggregator end} }
+
+  \section{Saiku}{ Using \code{create_schema} with Saiku.
+  If you intend to use Saiku with generated Mondrian
+  scheme, the following destination can be typically used:
+  \itemize{ \item \code{schema_date}
+  \code{[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/foodmart/[CUBE-NAME].xml}
+  \item \code{data_source_dest}
+  \code{[INSTALLATION-FOLDER]/saiku-server/tomcat/webapps/saiku/WEB-INF/classes/saiku-datasources/[CUBE-NAME]}
+  } }
+}
+\examples{
+\dontrun{
+create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest='/home/usr/bpr.xml', data_source_dest='/home/usr/bpr')
+}
 }
 

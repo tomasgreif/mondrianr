@@ -13,6 +13,8 @@
 #' 
 #' \dontrun{
 #' check_table_exists('PostgreSQL','table',c('usr','pwd','db','host','port') }
+#' 
+#' @export
 
 check_table_exists<- function(engine, table, con=NA, debug=FALSE) {
 

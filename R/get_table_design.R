@@ -14,10 +14,13 @@
 #' @param table Table to be analyzed.
 #' @param con Connection. See function \code{\link{create_schema}} for details.
 #' @param debug Print additional information useful for debugging.
-#' @examples \dontrun{
+#' @examples
 #' get_table_design(engine='R', table='iris')
-#' get_table_design(engine='PostgreSQL',table='public.big_portfolio',con=c('usr','pwd','db','host','port'))
-#' }
+#' 
+#' \dontrun{
+#' get_table_design(engine='PostgreSQL',
+#'  table='public.big_portfolio',con=c('usr','pwd','db','host','port'))}
+#'  
 #' @export 
 
 get_table_design <- function(engine=NA, table=NA, con=NA, debug=FALSE) {

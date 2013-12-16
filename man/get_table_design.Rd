@@ -30,9 +30,10 @@
   than NA }
 }
 \examples{
-\dontrun{
 get_table_design(engine='R', table='iris')
-get_table_design(engine='PostgreSQL',table='public.big_portfolio',con=c('usr','pwd','db','host','port'))
-}
+
+\dontrun{
+get_table_design(engine='PostgreSQL',
+ table='public.big_portfolio',con=c('usr','pwd','db','host','port'))}
 }
 

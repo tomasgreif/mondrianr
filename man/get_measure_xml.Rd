@@ -19,7 +19,8 @@
   XML that will be used in Mondrian schema.
 }
 \examples{
-measure <- get_measure(get_final_design('R',get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
+measure <- get_measure(get_final_design('R',
+ get_default_design('R',get_table_design('R','german_credit'),primary_key='id')))
 get_measure_xml(measure)
 }
 

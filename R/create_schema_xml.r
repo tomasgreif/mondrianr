@@ -11,11 +11,13 @@
 #' @param debug Print additional information useful for debugging.
 #' 
 #' @export 
-create_schema_xml <- function(engine, table, time_dimension_xml, dimension_xml, measure_xml, schema_dest, debug=FALSE) {
+create_schema_xml <- function(engine, table, time_dimension_xml, dimension_xml, measure_xml, calculated_member_xml, schema_dest, debug=FALSE) {
   
   if(debug) cat('Creating final Mondrian XML schema. \n')    
   
-  schema_definition <- paste0(get_header(engine, table),'\n', time_dimension_xml, '\n', dimension_xml,'\n\n',measure_xml,'\n',get_footer())
+  schema_definition <- paste0(get_header(engine, table),'\n', time_dimension_xml, '\n', dimension_xml,'\n\n',measure_xml,'\n',
+                              calculated_member_xml,'\n',
+                              get_footer())
   writeLines(schema_definition, con=schema_dest)
 
   if(debug) cat('   Cube written to destination. \n')
