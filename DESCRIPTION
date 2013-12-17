@@ -9,13 +9,12 @@ Version: 0.1.3
 Author: Tomas Greif
 Maintainer: Tomas Greif <greif.tomas@gmail.com>
 Depends:
-    R (>= 3.0.2)
+    R (>= 3.0.2),
+    RSQLite
 Imports:
     sqldf,
     RPostgreSQL,
     DBI
-Suggests:
-    RSQLite
 License: GPL-2
 LazyData: true
 Collate:
