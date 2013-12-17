@@ -59,7 +59,8 @@
 #' create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest=schema_dest)
 #' 
 #' # Do this again, but print additional debug messages.
-#' create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest=schema_dest, debug=TRUE)
+#' create_schema(engine='R',table='big_portfolio',primary_key='id', 
+#'               schema_dest=schema_dest, debug=TRUE)
 #' 
 #' # Create schema with time dimension
 #' create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
@@ -71,18 +72,22 @@
 #'               
 #' # Modify default dimensions (create dimension only for specified columns)
 #' create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
-#'               schema_dest=schema_dest, dimension="case when name in('product','region') then 1 else 0 end")
+#'               schema_dest=schema_dest, 
+#'               dimension="case when name in('product','region') then 1 else 0 end")
 #'               
 #' # Modify aggregators - enable all aggregators for numeric columns, keep default for others
-#' create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any', schema_dest=schema_dest, 
+#' create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any', 
+#'               schema_dest=schema_dest, 
 #'               aggregator="case when type='numeric' then '111111' else aggregator end")
 #' 
 #' # Create schema with calculated members
 #' create_schema(engine='R',table='big_portfolio',primary_key='id',time_table = 'any_name',
 #'              schema_dest=schema_dest, data_source_dest=data_source_dest,
 #'              calculated_member=list(
-#'                 c('Not repaid pct','[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]',NA),
-#'                 c('Repaid pct','[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]','##.00%')
+#'                 c('Not repaid pct',
+#'                   '[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]',NA),
+#'                 c('Repaid pct',
+#'                   '[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]','##.00%')
 #'             ))
 #'             
 #'                                  
