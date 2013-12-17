@@ -19,7 +19,7 @@ check_database_connection <- function(engine, con) {
             sqldf.RPostgreSQL.host      = con[4], 
             sqldf.RPostgreSQL.port      = con[5])
     
-    valid_connection <- tryCatch(sqldf("select TRUE;"), error=function(cond) FALSE)        
+    valid_connection <- tryCatch(sqldf("select TRUE;",drv='PostgreSQL'), error=function(cond) FALSE)        
     
   }
     
