@@ -19,12 +19,13 @@
   unique. Required}
 
   \item{con}{Connection to PostgreSQL database. Character
-  vector of exactly five (5) elements: user, password,
-  database, host, port. Required for PostgreSQL}
+  vector of exactly five (5) elements: \code{'user',
+  'password', 'database', 'host', 'port'}. Required for
+  PostgreSQL.}
 
   \item{dimension}{Rule to modify inclusion/exclusion of
   columns in \code{table} as dimenions. Has to be defined
-  as valid SQL \code{CASE} statement. Optional}
+  as valid SQL \code{CASE} statement. Optional.}
 
   \item{aggregator}{Rule to modify inclusion/exclusion of
   aggregators for columns in \code{table}. Has to be
@@ -107,13 +108,24 @@ data_source_dest <- paste0(getwd(),'/','test')
 # Simple schema, no time dimension, no data source definition
 create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest=schema_dest)
 
+# Do this again, but print additional debug messages.
+create_schema(engine='R',table='big_portfolio',primary_key='id', schema_dest=schema_dest, debug=TRUE)
+
 # Create schema with time dimension
 create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
               schema_dest=schema_dest, data_source_dest=data_source_dest)
 
-# Modify default dimensions (create only for factors)
+# Modify default dimensions (create dimension only for factors)
 create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
               schema_dest=schema_dest, dimension="case when type='factor' then 1 else 0 end")
+
+# Modify default dimensions (create dimension only for specified columns)
+create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any',
+              schema_dest=schema_dest, dimension="case when name in('product','region') then 1 else 0 end")
+
+# Modify aggregators - enable all aggregators for numeric columns, keep default for others
+create_schema(engine='R',table='big_portfolio',primary_key='id', time_table = 'any', schema_dest=schema_dest,
+              aggregator="case when type='numeric' then '111111' else aggregator end")
 
 # Create schema with calculated members
 create_schema(engine='R',table='big_portfolio',primary_key='id',time_table = 'any_name',
