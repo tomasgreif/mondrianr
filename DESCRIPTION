@@ -9,10 +9,12 @@ Version: 0.1.3
 Author: Tomas Greif
 Maintainer: Tomas Greif <greif.tomas@gmail.com>
 Depends:
-    R (>= 3.0.2),
+    R (>= 3.0.2)
+Imports:
     sqldf,
     RSQLite,
-    RPostgreSQL
+    RPostgreSQL,
+    DBI
 License: GPL-2
 LazyData: true
 Collate:
@@ -39,3 +41,4 @@ Collate:
     'create_schema_xml.r'
     'german_credit.r'
     'get_calculated_member_xml.r'
+    'is_vector.r'

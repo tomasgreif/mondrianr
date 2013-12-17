@@ -101,6 +101,7 @@
   aggregator end} }
 }
 \examples{
+require(RSQLite)
 # Get some valid destinations
 schema_dest <- paste0(getwd(),'/','test.xml')
 data_source_dest <- paste0(getwd(),'/','test')
