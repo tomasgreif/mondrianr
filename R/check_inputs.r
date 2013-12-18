@@ -20,6 +20,16 @@ check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=
   
   if(debug) cat('Checking input arguments. \n')
   
+  is_vector(engine)
+  is_vector(table)
+  is_vector(primary_key)
+  is_vector(aggregator)
+  is_vector(schema_dest)
+  is_vector(data_source_dest)
+  is_vector(time_table)
+  is_vector(debug,1,'logical')
+  
+  
   # Currently only R and PostgreSQL as data engine are supported
   if(!(engine %in% c('R','PostgreSQL'))) {
     stop('Engine has to be R or PostgreSQL')
@@ -37,7 +47,7 @@ check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=
   
   # Schema destination is required
   if(is.na(schema_dest)) {
-    stop('Schmea destination is required.')
+    stop('Schema destination is required.')
   }
   
   # If engine is PostgreSQL then connection is required
@@ -46,10 +56,8 @@ check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=
   }
   
   # If engine is PostgreSQL then con has to have 5 elements exactly
-  if(engine=='PostgreSQL' & length(con) != 5) {
-    stop('Connection has to be specified as vector with exactly five elements. See documentation for more details.')
-  }
-
+  if (engine=='PostgreSQL') is_vector(con,5)
+  
   # If engine is PostgreSQL than we should test that connection is valid
   if(engine=='PostgreSQL') {
     if (!check_database_connection('PostgreSQL',con)) {
