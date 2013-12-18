@@ -11,16 +11,19 @@
 is_vector <- function(vector, length=1, mode='character') {
   if(!is.vector(vector)) {
     
-    stop('Incorrect argument value: ', deparse(substitute(vector)),' is not vector.')
+    stop('Argument "', deparse(substitute(vector)),'" is not vector. Argument expects ', mode,
+         ' vector of length ', length ,', not ', mode(vector),'.')
     
   } else if (is.vector(vector) & length(vector) != length) {
     
-    stop('Incorrect argument value: ',deparse(substitute(vector)),' is vector with wrong length. Expected length is: ', length)
+    stop('Incorrect length of argument "',deparse(substitute(vector)),
+         '". Expected length is ', length, ' not ', length(vector),'.')
     
   } else if (!all(is.na(vector)) & !is.na(mode) & mode != mode(vector)) {
     
-    stop('Incorrect vector mode for ',deparse(substitute(vector)) ,': ', mode(vector), ' Expected mode is: ', mode )
+    stop('Incorrect vector mode for "',deparse(substitute(vector)) ,'". Expected mode is ', mode, ' not ', mode(vector) ,'.')
   }    
   
   return(invisible(TRUE))
 }
+
