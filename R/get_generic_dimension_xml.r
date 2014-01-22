@@ -57,7 +57,7 @@ get_generic_dimension_xml <- function(engine, final_design, table, time_table=NA
     <Dimension type="StandardDimension" visible="true" foreignKey="',primary_key,'" highCardinality="false" name="',dimension$clean_name,'">
      <Hierarchy name="',dimension$clean_name,'" visible="true" hasAll="true" primary_key="',primary_key,'">
      <Table name="',table_name[2],'"', schema ,'></Table>
-      <Level name="',dimension$clean_name,'" visible="true" column="',dimension$name,'" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
+      <Level name="',dimension$clean_name,'" visible="true" column="',dimension$name,'" type="',dimension$mondrian_type,'" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
       </Level>
      </Hierarchy>
     </Dimension>',sep='', collapse='')  
