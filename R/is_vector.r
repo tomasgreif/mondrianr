@@ -6,7 +6,15 @@
 #' @param vector Input object.
 #' @param length Required length of vector.
 #' @param mode Required mode of vector
-
+#' @examples
+#' is_vector(c(1:9),9,'numeric')
+#' is_vector('a')
+#' is_vector(TRUE,mode='logical')
+#' 
+#' \dontrun{
+#' is_vector(TRUE,mode='character')
+#' is_vector(c('a','b'),length=3)
+#' is_vector(iris)}
 
 is_vector <- function(vector, length=1, mode='character') {
   if(!is.vector(vector)) {
@@ -26,4 +34,3 @@ is_vector <- function(vector, length=1, mode='character') {
   
   return(invisible(TRUE))
 }
-

@@ -139,5 +139,18 @@ create_schema(engine='R',table='big_portfolio',primary_key='id',time_table = 'an
                 c('Repaid pct',
                   '[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]','##.00\%')
             ))
+
+\dontrun{
+# Complex example for PostgreSQL. tmp_time has to exist
+create_schema(engine='PostgreSQL',table='big_portfolio',primary_key='id',time_table = 'tmp_time',
+             schema_dest=schema_dest, data_source_dest=data_source_dest,
+             con=c('usr','pwd','db','host','port'),
+             calculated_member=list(
+                c('Not repaid pct',
+                  '[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]',NA),
+                c('Repaid pct',
+                  '[Measures].[Current balance-Sum]/[Measures].[Original balance-Sum]','##.00\%')
+            ))
+}
 }
 

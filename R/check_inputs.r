@@ -18,6 +18,8 @@
 check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,
                          time_table=NA,debug=FALSE) {
   
+  is_vector(debug,1,'logical')
+  
   if(debug) cat('Checking input arguments. \n')
   
   is_vector(engine)
@@ -27,8 +29,6 @@ check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=
   is_vector(schema_dest)
   is_vector(data_source_dest)
   is_vector(time_table)
-  is_vector(debug,1,'logical')
-  
   
   # Currently only R and PostgreSQL as data engine are supported
   if(!(engine %in% c('R','PostgreSQL'))) {

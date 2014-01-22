@@ -16,4 +16,14 @@
   Used to control arguments. Returns error when object does
   not match given properties.
 }
+\examples{
+is_vector(c(1:9),9,'numeric')
+is_vector('a')
+is_vector(TRUE,mode='logical')
+
+\dontrun{
+is_vector(TRUE,mode='character')
+is_vector(c('a','b'),length=3)
+is_vector(iris)}
+}
 
