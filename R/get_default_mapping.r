@@ -36,33 +36,34 @@ get_default_mapping <- function(engine=NA, debug=FALSE) {
 if(engine=='PostgreSQL') {  
 # Order of aggregators - average, count, count distinct, max, min, sum
 default_mapping <- read.table(header=T, sep=",",colClasses=c('character','character','logical','character'), text="
-class, type, dimension, aggregator
-'integer','integer',TRUE,'111111'
-'integer','smallint',TRUE,'111111'
-'integer','bigint',TRUE,'111111'
-'numeric','numeric',FALSE,'110111'
-'numeric','decimal',FALSE,'110111'
-'numeric','real',FALSE,'110111'
-'numeric','decimal',FALSE,'110111'
-'numeric','double precision',FALSE,'110111'
-'text','character',TRUE,'010000'
-'text','character varying',TRUE,'010000'
-'text','text',TRUE,'010000'
-'date','date',TRUE,'010000'
-'bool','boolean',TRUE,'010000'
-'timestamp','timestamp without time zone',FALSE,'000000'
+
+class, type, dimension, aggregator,mondrian_type
+'integer','integer',TRUE,'111111','Integer'
+'integer','smallint',TRUE,'111111','Integer'
+'integer','bigint',TRUE,'111111','Integer'
+'numeric','numeric',FALSE,'110111','Numeric'
+'numeric','decimal',FALSE,'110111','Numeric'
+'numeric','real',FALSE,'110111','Numeric'
+'numeric','decimal',FALSE,'110111','Numeric'
+'numeric','double precision',FALSE,'110111','Numeric'
+'text','character',TRUE,'010000','String'
+'text','character varying',TRUE,'010000','String'
+'text','text',TRUE,'010000','String'
+'date','date',TRUE,'010000','Date'
+'bool','boolean',TRUE,'010000','Boolean'
+'timestamp','timestamp without time zone',FALSE,'000000','Timestamp'
 
 ")
 
 } else if (engine=='R') {
 default_mapping <- read.table(header=T, sep=",",colClasses=c('character','character','logical','character'), text="
-class, type, dimension, aggregator
-'integer','integer',FALSE,'100111'
-'numeric','numeric',FALSE,'100111'
-'numeric','double',FALSE,'100111'
-'text','character',TRUE,'010000'
-'date','date',TRUE,'010000'
-'factor','factor',TRUE,'000000'
+class, type, dimension, aggregator,mondrian_type
+'integer','integer',FALSE,'100111','Integer'
+'numeric','numeric',FALSE,'100111','Numeric'
+'numeric','double',FALSE,'100111','Numeric'
+'text','character',TRUE,'010000','String'
+'date','date',TRUE,'010000','Date'
+'factor','factor',TRUE,'000000','String
 ")  
 }
 
