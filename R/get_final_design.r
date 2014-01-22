@@ -23,12 +23,12 @@ get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA
   final_design <- default_design
   
   if(!(is.na(dimension))) {
-    sql <- paste("select name, schema, class, type, ",dimension," as dimension, aggregator, is_primary_key, clean_name from final_design")
+    sql <- paste("select name, schema, class, type, ",dimension," as dimension, aggregator, mondrian_type, is_primary_key, clean_name from final_design")
     final_design <- sqldf(sql, drv='SQLite')
   }    
 
   if(!(is.na(aggregator))) {
-    sql <- paste("select name, schema, class, type, dimension, ",aggregator," as aggregator, is_primary_key, clean_name from final_design")
+    sql <- paste("select name, schema, class, type, dimension, ",aggregator," as aggregator, mondrian_type, is_primary_key, clean_name from final_design")
     final_design <- sqldf(sql, drv='SQLite')
   }      
 
