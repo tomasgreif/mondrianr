@@ -47,6 +47,7 @@ get_default_design <- function(engine,table_design,primary_key,debug=FALSE) {
                     dm.class,
                     dm.type,
                     dm.dimension,
+                    dm.mondrian_type,
                     case when td.name='",primary_key,"' then '010000' else dm.aggregator end as aggregator,
                     case when td.name='",primary_key,"' then 1 else 0 end as is_primary_key
                   from 
