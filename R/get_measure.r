@@ -26,23 +26,23 @@ get_measure <- function(final_design, debug=FALSE) {
   aggregators_names <- c('Avg','#','Dcnt','Max','Min','Sum')
 
   measure <- final_design[as.integer(final_design$aggregator)>0 & final_design$is_primary_key==0, ]
+  measures <- nrow(measure)
 
-  measure <- cbind(do.call("rbind", replicate(6, measure, simplify = FALSE)),id_measure=rep(1:6, each=nrow(measure)))
-
-  measure <- measure[substr(measure$aggregator,measure$id_measure,measure$id_measure)=='1', ]
-
-  measure$aggregator_name <- aggregators[measure$id_measure]
-  
-  measure$aggregator_clean_name <- aggregators_names[measure$id_measure]
-  
-  measure$measure_name <- paste0(measure$clean_name,'-',measure$aggregator_clean_name)
-  
   primary_key_measure <- sqldf("select name, schema, 'count' as aggregator_name, 'Count (PK)' as measure_name from final_design where is_primary_key =1",
-                               drv='SQLite')
+                               drv='SQLite')  
   
-  measure <- sqldf("select name, schema, aggregator_name, measure_name from measure order by measure_name;", drv='SQLite')
-  
-  measure <- rbind(primary_key_measure, measure)
+  if (measures > 0) {
+    measure <- cbind(do.call("rbind", replicate(6, measure, simplify = FALSE)),id_measure=rep(1:6, each=nrow(measure)))
+    measure <- measure[substr(measure$aggregator,measure$id_measure,measure$id_measure)=='1', ]
+    measure$aggregator_name <- aggregators[measure$id_measure]
+    measure$aggregator_clean_name <- aggregators_names[measure$id_measure]
+    measure$measure_name <- paste0(measure$clean_name,'-',measure$aggregator_clean_name)    
+    measure <- sqldf("select name, schema, aggregator_name, measure_name from measure order by measure_name;", drv='SQLite')
+    measure <- rbind(primary_key_measure, measure)
+  } else {
+    if(debug) cat('   No measures defined. Only count for primary key will be created. \n')  
+    measure = primary_key_measure
+  }
 
   if(debug) cat('   Done. Number of measures:', nrow(measure), '\n')  
   
