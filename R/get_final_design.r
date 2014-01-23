@@ -9,7 +9,7 @@
 #' @param debug Print additional information useful for debugging.
 #' @examples
 #' get_final_design('R',get_default_design('R',
-#'  get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'")
+#'  get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'", debug=TRUE)
 #' get_final_design('R',get_default_design('R',
 #'  get_table_design('R','german_credit'),primary_key='id'),dimension="0")
 #' get_final_design('R',
@@ -36,8 +36,16 @@ get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA
     stop('Cannot create final design. Some aggregator is not defined as string with 6 digits. Check default mapping and aggregator argument.')
   }
   
-  if(debug) cat('   Final design created. Number of rows:', nrow(final_design),'\n')
-  
+  if(debug) {
+    cat('   Final design created. Number of rows:', nrow(final_design),'\n')
+    cat('     Requested number of dimensions: ', sum(final_design$dimension),'\n')
+    cat('     Requested number of measures: ', sum(as.integer(unlist(strsplit(final_design$aggregator,split='')))),'\n')
+    cat('     Columns with at least one measure: ' , sum(as.integer(final_design$aggregator) > 0),'\n')
+    cat('     Columns without dimension and measure: ', sum(!final_design$dimension & as.integer(final_design$aggregator) == 0 ),'\n')
+    if (sum(!final_design$dimension & as.integer(final_design$aggregator) == 0) > 0) {
+      cat('       |- List: ', final_design$name[!final_design$dimension & as.integer(final_design$aggregator) == 0 ],'\n')
+    }
+  }
   final_design
      
 }

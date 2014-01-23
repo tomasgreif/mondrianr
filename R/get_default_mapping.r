@@ -63,7 +63,7 @@ class, type, dimension, aggregator,mondrian_type
 'numeric','double',FALSE,'100111','Numeric'
 'text','character',TRUE,'010000','String'
 'date','date',TRUE,'010000','Date'
-'factor','factor',TRUE,'000000','String
+'factor','factor',TRUE,'000000','String'
 ")  
 }
 
