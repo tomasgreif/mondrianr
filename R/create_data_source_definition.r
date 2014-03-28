@@ -7,6 +7,7 @@
 #' @param schema_dest Where schema definition will be stored. Valid path, including file name with schema.
 #' @param data_source_dest Where data source definition file should be written.
 #' @param con Connection. See \code{\link{create_schema}} for details.
+#' @param security_type Security type for Saiku. See \code{\link{create_schema}} for details.
 #' @param debug Print additional information useful for debugging.
 #' @examples \dontrun{
 #' create_data_source_definition('R','mtcars','~/schema.xml','~/data_source')
@@ -14,7 +15,7 @@
 #'  '~/schema.xml','~/data_source',c('usr','pwd','db','host','port'))
 #' }
 #' @export 
-create_data_source_definition <- function(engine, table, schema_dest, data_source_dest, con, debug=FALSE) {
+create_data_source_definition <- function(engine, table, schema_dest, data_source_dest, con, security_type, debug=FALSE) {
   
   if(debug) cat('Creating data source definition file. \n')    
   
@@ -32,8 +33,14 @@ create_data_source_definition <- function(engine, table, schema_dest, data_sourc
         Catalog=', schema_dest,';JdbcDrivers=org.postgresql.Driver;
         username=', con[1],'
         password=', con[2]
-      )    
-    }
+      )
+       if(!is.na(security_type)) {
+         data_source_definition <- paste0(data_source_definition,'\n',
+         'security.enabled=true
+         security.type=', security_type)
+       }
+     } 
+    
     
     if(engine=='R') {
       data_source_definition <- paste0(
