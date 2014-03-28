@@ -5,6 +5,6 @@
 
 
 get_footer <- function() {
-  cube_footer <- '</Cube></Schema>'   
+  cube_footer <- '</Schema>'   
 }
 

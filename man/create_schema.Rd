@@ -2,10 +2,10 @@
 \alias{create_schema}
 \title{Create Mondrian schema}
 \usage{
-  create_schema(engine = NA, table = NA, primary_key = NA,
-    con = NA, dimension = NA, aggregator = NA,
-    schema_dest = NA, data_source_dest = NA,
-    time_table = NA, calculated_member = NA, debug = FALSE)
+create_schema(engine = NA, table = NA, primary_key = NA, con = NA,
+  dimension = NA, aggregator = NA, schema_dest = NA,
+  data_source_dest = NA, time_table = NA, calculated_member = NA,
+  security_type = NA, security_roles = NA, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. Valid options are: \code{R},
@@ -63,42 +63,55 @@
   If not used than date columns will be treated as generic
   dimension.}
 
+  \item{security_type}{Type of security for Saiku.
+  Currently only one2one is supported. Using this makes
+  sense only when \code{security_roles_xml} is used.
+  Optional.}
+
+  \item{security_roles}{Vector defining what roles will
+  have access to cube. Meaningful only when
+  \code{security_typ} is set to \code{one2one}. When only
+  one role is given than this will be used to GRANT all
+  rights to cube to this role. When two roles are given
+  than the first will be used to GRANT all rights to cube
+  and the second will be used to DENY access to everything.
+  Optional.}
+
   \item{debug}{Print additional information useful for
   debugging.}
 }
 \description{
-  This function returns XML definition of Mondrian schema.
-  Optionally returns file with data source definition for
-  Saiku.
+This function returns XML definition of Mondrian schema.
+Optionally returns file with data source definition for
+Saiku.
 }
 \details{
-  Arguments \code{dimension} and \code{aggregator} are
-  required to be valid SQL \code{CASE} statement. Case
-  statement is similar to \code{if} statement available in
-  many languages. Basic structure is: \code{CASE WHEN
-  <CONDITION> THEN <VALUE> [[WHEN <CONDITION> THEN <VALUE>]
-  ELSE <VALUE>] END}. Both \code{dimension} and
-  \code{aggregator} arguments are used to modify content of
-  data frame with default design (see
-  \code{\link{get_default_design}} for details). This means
-  that you can use columns \code{name, class, type,
-  dimension, aggregator} in case statement. Examples for
-  dimension: \itemize{ \item For numeric data types do not
-  create dimenions, otherwise do create dimensions:
-  \code{case when class='numeric' then 0 else 1 end} \item
-  For columns a, b create dimenions and for other columns
-  keep default value: \code{case when name in('a','b') then
-  1 else dimension end} }
+Arguments \code{dimension} and \code{aggregator} are
+required to be valid SQL \code{CASE} statement. Case
+statement is similar to \code{if} statement available in
+many languages. Basic structure is: \code{CASE WHEN
+<CONDITION> THEN <VALUE> [[WHEN <CONDITION> THEN <VALUE>]
+ELSE <VALUE>] END}. Both \code{dimension} and
+\code{aggregator} arguments are used to modify content of
+data frame with default design (see
+\code{\link{get_default_design}} for details). This means
+that you can use columns \code{name, class, type,
+dimension, aggregator} in case statement. Examples for
+dimension: \itemize{ \item For numeric data types do not
+create dimenions, otherwise do create dimensions:
+\code{case when class='numeric' then 0 else 1 end} \item
+For columns a, b create dimenions and for other columns
+keep default value: \code{case when name in('a','b') then 1
+else dimension end} }
 
-  Examples for aggregator: \itemize{ \item Only count
-  aggregator for non-numeric columns and default for other
-  columns: \code{case when class <> 'numeric' then '010000'
-  else aggregator end} \item No aggregator for date and
-  text columns and count for all others: \code{case when
-  class in('text','numeric') then '000000' else '010000'
-  end} \item No aggregtor for dimensions, default for
-  others: \code{case when dimension=1 then '000000' else
-  aggregator end} }
+Examples for aggregator: \itemize{ \item Only count
+aggregator for non-numeric columns and default for other
+columns: \code{case when class <> 'numeric' then '010000'
+else aggregator end} \item No aggregator for date and text
+columns and count for all others: \code{case when class
+in('text','numeric') then '000000' else '010000' end} \item
+No aggregtor for dimensions, default for others: \code{case
+when dimension=1 then '000000' else aggregator end} }
 }
 \examples{
 # Get some valid destinations

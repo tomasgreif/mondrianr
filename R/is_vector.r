@@ -15,6 +15,8 @@
 #' is_vector(TRUE,mode='character')
 #' is_vector(c('a','b'),length=3)
 #' is_vector(iris)}
+#' @export
+
 
 is_vector <- function(vector, length=1, mode='character') {
   if(!is.vector(vector)) {

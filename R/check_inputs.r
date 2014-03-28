@@ -12,11 +12,13 @@
 #' @param schema_dest See function \code{\link{create_schema}} for details.
 #' @param data_source_dest See function \code{\link{create_schema}} for details.
 #' @param time_table See function \code{\link{create_schema}} for details.
+#' @param security_type See function \code{\link{create_schema}} for details.
+#' @param security_roles See function \code{\link{create_schema}} for details.
 #' @param debug See function \code{\link{create_schema}} for details.
 #' @export 
 
 check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,
-                         time_table=NA,debug=FALSE) {
+                         time_table=NA,security_type=NA, security_roles=NA, debug=FALSE) {
   
   is_vector(debug,1,'logical')
   
@@ -29,6 +31,7 @@ check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=
   is_vector(schema_dest)
   is_vector(data_source_dest)
   is_vector(time_table)
+  is_vector(security_type)
   
   # Currently only R and PostgreSQL as data engine are supported
   if(!(engine %in% c('R','PostgreSQL'))) {
@@ -73,10 +76,19 @@ check_inputs <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=
   # If engine is PostgreSQL and time table is specified than it should exist
   if(engine=='PostgreSQL' & !is.na(time_table)) {
     if(!check_table_exists(engine=engine, table=time_table, con=con, debug=debug)) {  
-      stop('Table specified as argument "time_table" does not exists.')
+      stop('Table specified as argument "time_table" does not exists.\n')
     }    
   }
 
+  # If security type is defined then security roles should not be empty
+  if(!is.na(security_type) & security_type!='one2one') {
+    stop('Only one2one security type is supported.')
+  }
+  
+  if(!is.na(security_type) & all(is.na(security_roles))) {
+    stop('You have to specify at least one security role when one2one security is enabled.')
+  }
+  
   if(debug) cat('   Everything looks OK so far. \n')  
 
 }

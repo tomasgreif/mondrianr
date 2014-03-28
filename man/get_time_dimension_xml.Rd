@@ -2,8 +2,8 @@
 \alias{get_time_dimension_xml}
 \title{Get XML for time dimension}
 \usage{
-  get_time_dimension_xml(engine, time_table = NA,
-    final_design, con, debug = FALSE)
+get_time_dimension_xml(engine, time_table = NA, final_design, con,
+  debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -22,7 +22,7 @@
   debugging.}
 }
 \description{
-  Returns XML for time dimensions. Creates XML that will be
-  used in Mondrian schema.
+Returns XML for time dimensions. Creates XML that will be
+used in Mondrian schema.
 }
 

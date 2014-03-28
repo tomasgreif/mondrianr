@@ -2,7 +2,7 @@
 \alias{get_header}
 \title{Get schema header}
 \usage{
-  get_header(engine, table, debug = NA)
+get_header(engine, table, debug = NA)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -14,7 +14,7 @@
   debugging.}
 }
 \description{
-  Returns schema header for given data engine and table.
+Returns schema header for given data engine and table.
 }
 \examples{
 get_header('R','iris')

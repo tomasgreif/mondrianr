@@ -2,8 +2,8 @@
 \alias{create_data_source_definition}
 \title{Creates data source definition for Saiku}
 \usage{
-  create_data_source_definition(engine, table, schema_dest,
-    data_source_dest, con, debug = FALSE)
+create_data_source_definition(engine, table, schema_dest, data_source_dest, con,
+  security_type, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -21,12 +21,15 @@
   \item{con}{Connection. See \code{\link{create_schema}}
   for details.}
 
+  \item{security_type}{Security type for Saiku. See
+  \code{\link{create_schema}} for details.}
+
   \item{debug}{Print additional information useful for
   debugging.}
 }
 \description{
-  Returns valid data source definition for Saiku and writes
-  it to destination
+Returns valid data source definition for Saiku and writes
+it to destination
 }
 \examples{
 \dontrun{

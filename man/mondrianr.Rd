@@ -4,6 +4,6 @@
 \alias{mondrianr-package}
 \title{mondrianr}
 \description{
-  mondrianr
+mondrianr
 }
 

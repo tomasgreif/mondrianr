@@ -2,8 +2,8 @@
 \alias{get_final_design}
 \title{Get final design}
 \usage{
-  get_final_design(engine, default_design, dimension = NA,
-    aggregator = NA, debug = FALSE)
+get_final_design(engine, default_design, dimension = NA, aggregator = NA,
+  debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -23,12 +23,12 @@
   debugging.}
 }
 \description{
-  Takes \code{default_design} as input and modifies it
-  accordingly.
+Takes \code{default_design} as input and modifies it
+accordingly.
 }
 \examples{
 get_final_design('R',get_default_design('R',
- get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'")
+ get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'", debug=TRUE)
 get_final_design('R',get_default_design('R',
  get_table_design('R','german_credit'),primary_key='id'),dimension="0")
 get_final_design('R',

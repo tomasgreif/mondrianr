@@ -2,7 +2,7 @@
 \alias{check_database_connection}
 \title{Check database existence}
 \usage{
-  check_database_connection(engine, con)
+check_database_connection(engine, con)
 }
 \arguments{
   \item{engine}{See function \code{\link{create_schema}}
@@ -12,9 +12,9 @@
   details.}
 }
 \description{
-  Checks if database exists for given data engine and
-  connection. Function returns \code{TRUE} when database
-  exists and \code{FALSE} otherwise.
+Checks if database exists for given data engine and
+connection. Function returns \code{TRUE} when database
+exists and \code{FALSE} otherwise.
 }
 \examples{
 \dontrun{

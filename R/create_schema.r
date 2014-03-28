@@ -48,6 +48,10 @@
 #' with columns \code{time_date, year_number, quarter_number, month_number}. If R than any name can be used as
 #' time dimension is created dynamically. Optional. If not used than date columns will be treated as generic
 #' dimension.
+#' @param security_type Type of security for Saiku. Currently only one2one is supported. Using this makes sense only when \code{security_roles_xml} is used. Optional.
+#' @param security_roles Vector defining what roles will have access to cube. Meaningful only when \code{security_typ} is set to \code{one2one}. When only one role
+#' is given than this will be used to GRANT all rights to cube to this role. When two roles are given than the first will be used to GRANT all rights
+#' to cube and the second will be used to DENY access to everything. Optional.
 #' @param debug Print additional information useful for debugging.
 #' @examples
 #' 
@@ -105,10 +109,11 @@
 #' @export 
 #' 
 create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension=NA, aggregator=NA,schema_dest=NA,data_source_dest=NA,
-                           time_table=NA,calculated_member=NA, debug=FALSE) {
+                           time_table=NA,calculated_member=NA, security_type=NA, security_roles=NA, debug=FALSE) {
 
   check_inputs(engine=engine, table=table, primary_key=primary_key, con=con, dimension=dimension, aggregator=aggregator,
-               schema_dest=schema_dest,data_source_dest=data_source_dest,time_table=time_table,debug=debug)
+               schema_dest=schema_dest,data_source_dest=data_source_dest,time_table=time_table,security_type=security_type,
+               security_roles=security_roles,debug=debug)
   
   prepare_infrastructure(engine=engine, table=table, time_table=time_table, debug=debug)
   
@@ -133,11 +138,12 @@ create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension
   calculated_member_xml <- get_calculated_member_xml(engine, calculated_member, debug=debug)
 
   # Generate connection file and write to specified connection  
-  create_data_source_definition(engine=engine, table=table, schema_dest=schema_dest, data_source_dest, con=con, debug=debug)  
+  create_data_source_definition(engine=engine, table=table, schema_dest=schema_dest, data_source_dest, con=con, security_type=security_type, 
+                                debug=debug)  
 
   # Finalize schema and write it to destination
   create_schema_xml(engine=engine,table=table,time_dimension_xml=time_dimension_xml,dimension_xml=dimension_xml,measure_xml=measure_xml,
-                    calculated_member_xml <- calculated_member_xml,
+                    calculated_member_xml = calculated_member_xml, security_roles = security_roles,
                     schema_dest=schema_dest,debug=debug)
   
   cat('Process successfuly finished. \n')

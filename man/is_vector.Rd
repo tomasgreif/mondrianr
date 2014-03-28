@@ -2,7 +2,7 @@
 \alias{is_vector}
 \title{Check if argument is vector with given properties}
 \usage{
-  is_vector(vector, length = 1, mode = "character")
+is_vector(vector, length = 1, mode = "character")
 }
 \arguments{
   \item{vector}{Input object.}
@@ -12,9 +12,9 @@
   \item{mode}{Required mode of vector}
 }
 \description{
-  Checks if argument is vector with given length and mode.
-  Used to control arguments. Returns error when object does
-  not match given properties.
+Checks if argument is vector with given length and mode.
+Used to control arguments. Returns error when object does
+not match given properties.
 }
 \examples{
 is_vector(c(1:9),9,'numeric')

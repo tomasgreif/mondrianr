@@ -2,8 +2,8 @@
 \alias{prepare_infrastructure}
 \title{Prepare infrastructure}
 \usage{
-  prepare_infrastructure(engine = NA, table = NA,
-    time_table = NA, debug = FALSE)
+prepare_infrastructure(engine = NA, table = NA, time_table = NA,
+  debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -19,8 +19,8 @@
   debugging.}
 }
 \description{
-  Prepare infrastructure. This includes all steps necessary
-  before we start creating schema. For some data engines
-  there is nothing to prepare
+Prepare infrastructure. This includes all steps necessary
+before we start creating schema. For some data engines
+there is nothing to prepare
 }
 

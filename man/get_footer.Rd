@@ -2,9 +2,9 @@
 \alias{get_footer}
 \title{Get schema footer}
 \usage{
-  get_footer()
+get_footer()
 }
 \description{
-  Returns schema footer XML.
+Returns schema footer XML.
 }
 

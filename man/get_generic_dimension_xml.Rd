@@ -2,8 +2,8 @@
 \alias{get_generic_dimension_xml}
 \title{Get XML for generic dimension}
 \usage{
-  get_generic_dimension_xml(engine, final_design, table,
-    time_table = NA, primary_key, debug = FALSE)
+get_generic_dimension_xml(engine, final_design, table, time_table = NA,
+  primary_key, debug = FALSE)
 }
 \arguments{
   \item{engine}{Data engine. See function
@@ -24,11 +24,10 @@
   debugging.}
 }
 \description{
-  Returns XML for generic dimensions Creates XML that will
-  be used in Mondrian schema. Generic dimensions are
-  currently all columns where dimension is \code{TRUE} in
-  \code{final_design} and column is not of \code{class}
-  date.
+Returns XML for generic dimensions Creates XML that will be
+used in Mondrian schema. Generic dimensions are currently
+all columns where dimension is \code{TRUE} in
+\code{final_design} and column is not of \code{class} date.
 }
 \examples{
 final_design <- get_final_design('R',
