@@ -9,17 +9,17 @@
 #' @param debug Print additional information useful for debugging.
 #' @examples
 #' get_final_design('R',get_default_design('R',
-#'  get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'", debug=TRUE)
+#' get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'", debug=TRUE)
 #' get_final_design('R',get_default_design('R',
-#'  get_table_design('R','german_credit'),primary_key='id'),dimension="0")
+#' get_table_design('R','german_credit'),primary_key='id'),dimension="0")
 #' get_final_design('R',
-#'  get_default_design('R',get_table_design('R','big_portfolio'),primary_key='id'))
+#' get_default_design('R',get_table_design('R','big_portfolio'),primary_key='id'))
 #' @export 
 
 get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA, debug=FALSE) {
   
   if(debug) cat('Creating final design. \n')
-  
+
   final_design <- default_design
   
   if(!(is.na(dimension))) {
@@ -28,10 +28,19 @@ get_final_design <- function(engine, default_design, dimension=NA, aggregator=NA
   }    
 
   if(!(is.na(aggregator))) {
-    sql <- paste("select name, schema, class, type, dimension, ",aggregator," as aggregator, mondrian_type, is_primary_key, clean_name from final_design")
+    sql <- paste("select name, schema, class, type, dimension, ",
+                 if(nchar(aggregator) == 6) {
+                     paste0("'", aggregator, "'")
+                   } else {
+                     aggregator
+                   },
+                 " as aggregator, mondrian_type, is_primary_key, clean_name from final_design")
+
     final_design <- sqldf(sql, drv='SQLite')
   }      
 
+  print(final_design$aggregator)
+  
   if(!all(nchar(final_design$aggregator) == 6)) {
     stop('Cannot create final design. Some aggregator is not defined as string with 6 digits. Check default mapping and aggregator argument.')
   }

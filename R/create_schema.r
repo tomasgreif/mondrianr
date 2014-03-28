@@ -18,7 +18,8 @@
 #'  \itemize{
 #'    \item Only count aggregator for non-numeric columns and default for other columns: \code{case when class <> 'numeric' then '010000' else aggregator end}
 #'    \item No aggregator for date and text columns and count for all others: \code{case when class in('text','numeric') then '000000' else '010000' end}
-#'    \item No aggregtor for dimensions, default for others: \code{case when dimension=1 then '000000' else aggregator end}
+#'    \item No aggregator for dimensions, default for others: \code{case when dimension=1 then '000000' else aggregator end}
+#'    \item No aggregators at all (only count for PK will be displayed): \code{000000}
 #'  }
 #'  
 #' @param engine Data engine. Valid options are: \code{R}, \code{PostgreSQL}. If \code{PostgreSQL} is used then
@@ -30,7 +31,8 @@
 #' @param dimension Rule to modify inclusion/exclusion of columns in \code{table} as dimenions. Has to be defined
 #' as valid SQL \code{CASE} statement. Optional.
 #' @param aggregator Rule to modify inclusion/exclusion of aggregators for columns in \code{table}. Has to be defined
-#' as valid SQL \code{CASE} statement and always return string with exactly six (6) digits. If digit is \code{1} than aggregator 
+#' as valid SQL \code{CASE} statement and always return string with exactly six (6) digits. If same aggregetors should be used for all variables then string with exactly 6 digits
+#' can be used instead of case statement. If digit is \code{1} than aggregator 
 #' is enabled. If \code{0} then aggregator is disabled.  Aggregators are defined in the following 
 #' order: \code{average, count, distinct-count, maximum, minimum, sum}. Argument is evaluated after argument \code{dimension}. Optional
 #' @param schema_dest Path to file where Mondrian schema will be stored. Has to include file name.
@@ -116,7 +118,7 @@ create_schema <- function(engine=NA, table=NA, primary_key=NA, con=NA, dimension
                security_roles=security_roles,debug=debug)
   
   prepare_infrastructure(engine=engine, table=table, time_table=time_table, debug=debug)
-  
+
   # Create schema design
   table_design    <- get_table_design(engine=engine,table=table,con=con,debug=debug)
   default_design  <- get_default_design(engine=engine, table_design=table_design,primary_key=primary_key,debug=debug)

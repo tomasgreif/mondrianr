@@ -30,12 +30,15 @@ create_schema(engine = NA, table = NA, primary_key = NA, con = NA,
   \item{aggregator}{Rule to modify inclusion/exclusion of
   aggregators for columns in \code{table}. Has to be
   defined as valid SQL \code{CASE} statement and always
-  return string with exactly six (6) digits. If digit is
-  \code{1} than aggregator is enabled. If \code{0} then
-  aggregator is disabled.  Aggregators are defined in the
-  following order: \code{average, count, distinct-count,
-  maximum, minimum, sum}. Argument is evaluated after
-  argument \code{dimension}. Optional}
+  return string with exactly six (6) digits. If same
+  aggregetors should be used for all variables then string
+  with exactly 6 digits can be used instead of case
+  statement. If digit is \code{1} than aggregator is
+  enabled. If \code{0} then aggregator is disabled.
+  Aggregators are defined in the following order:
+  \code{average, count, distinct-count, maximum, minimum,
+  sum}. Argument is evaluated after argument
+  \code{dimension}. Optional}
 
   \item{schema_dest}{Path to file where Mondrian schema
   will be stored. Has to include file name.}
@@ -110,8 +113,10 @@ columns: \code{case when class <> 'numeric' then '010000'
 else aggregator end} \item No aggregator for date and text
 columns and count for all others: \code{case when class
 in('text','numeric') then '000000' else '010000' end} \item
-No aggregtor for dimensions, default for others: \code{case
-when dimension=1 then '000000' else aggregator end} }
+No aggregator for dimensions, default for others:
+\code{case when dimension=1 then '000000' else aggregator
+end} \item No aggregators at all (only count for PK will be
+displayed): \code{000000} }
 }
 \examples{
 # Get some valid destinations

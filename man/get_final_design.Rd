@@ -28,10 +28,10 @@ accordingly.
 }
 \examples{
 get_final_design('R',get_default_design('R',
- get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'", debug=TRUE)
+get_table_design('R','german_credit'),primary_key='id'),aggregator="'000000'", debug=TRUE)
 get_final_design('R',get_default_design('R',
- get_table_design('R','german_credit'),primary_key='id'),dimension="0")
+get_table_design('R','german_credit'),primary_key='id'),dimension="0")
 get_final_design('R',
- get_default_design('R',get_table_design('R','big_portfolio'),primary_key='id'))
+get_default_design('R',get_table_design('R','big_portfolio'),primary_key='id'))
 }
 
